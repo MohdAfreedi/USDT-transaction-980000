@@ -1,34 +1,327 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d18">
+  <meta name="color-scheme" content="dark">
+  <title>ChainScope | Administrator Access</title>
+  <link rel="stylesheet" href="/style.css">
 
-<meta charset="UTF-8">
+  <style>
+    /* Login-specific styling; your existing style.css remains in place. */
+    .login-card input {
+      box-sizing: border-box;
+      width: 100%;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    .login-card label {
+      display: block;
+      margin: 18px 0 8px;
+    }
 
-<title>Oracle Cloud</title>
+    .password-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
 
-<link rel="stylesheet" href="css/style.css">
+    .password-field input {
+      padding-right: 70px;
+    }
 
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .sign-in-button {
+      width: 100%;
+      margin-top: 18px;
+      cursor: pointer;
+    }
+
+    .sign-in-button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    #login-message {
+      min-height: 20px;
+      overflow-wrap: anywhere;
+      font-size: 0.9rem;
+    }
+
+    #login-message[data-state="error"] {
+      color: #ff8b8b;
+    }
+
+    #login-message[data-state="success"] {
+      color: #7ee0b0;
+    }
+
+    .admin-note {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+
+    .admin-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    .admin-indicator {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #56d6a0;
+    }
+  </style>
 </head>
 
 <body>
+  <main class="login-layout">
+    <section class="brand-panel">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <span>CHAINSCOPE</span>
+      </div>
 
-<div class="container">
+      <div class="hero">
+        <p class="eyebrow">
+          <span class="live-dot"></span>
+          BLOCKCHAIN INFRASTRUCTURE
+        </p>
 
-<h1>Oracle Cloud</h1>
+        <h1>Clarity for every<br><span>on-chain signal.</span></h1>
 
-<p>Enterprise Cloud Platform</p>
+        <p class="hero-copy">
+          A unified console for network monitoring, infrastructure health,
+          and transaction observability.
+        </p>
 
-<input type="email" placeholder="Email">
+        <div class="status-panel">
+          <div>
+            <span class="status-label">CONSOLE STATUS</span>
+            <strong>
+              <span class="live-dot"></span>
+              Interface ready
+            </strong>
+          </div>
+          <span class="status-tag"></span>
+        </div>
+      </div>
 
-<input type="password" placeholder="Password">
+      <p class="footer-note">
+        INDEPENDENT CONSOLE · NOT A WALLET PROVIDER
+      </p>
+    </section>
 
-<button onclick="window.location.href='dashboard.html'">Login</button>
+    <section class="form-panel">
+      <div class="login-card">
+        <p class="eyebrow">RESTRICTED ACCESS</p>
 
-</div>
+        <h2 id="form-title">Administrator login</h2>
 
+        <p class="form-subtitle">
+          Sign in using the shared administrator credentials.
+        </p>
+
+        <div class="admin-label">
+          <span class="admin-indicator"></span>
+          ADMINISTRATOR ACCESS
+        </div>
+
+        <form id="auth-form">
+          <label for="username">Administrator username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Enter administrator username"
+            autocomplete="username"
+            maxlength="200"
+            required
+          >
+
+          <label for="password">Administrator password</label>
+
+          <div class="password-field">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter administrator password"
+              autocomplete="current-password"
+              maxlength="200"
+              required
+            >
+
+            <button
+              class="toggle-password"
+              type="button"
+              id="toggle-password"
+              aria-controls="password"
+              aria-pressed="false"
+            >Show</button>
+          </div>
+
+          <p id="login-message" role="status" aria-live="polite"></p>
+
+          <button
+            class="sign-in-button"
+            id="submit-button"
+            type="submit"
+          >
+            Sign in securely
+          </button>
+        </form>
+
+        <p class="security-note">
+          Authorized users share the same administrator credential.
+          Never enter a wallet recovery phrase, private key, or wallet password.
+        </p>
+
+        <p class="admin-note">
+          Access is verified by the server. Your administrator password
+          is not stored in this webpage.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const form = document.getElementById("auth-form");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("toggle-password");
+    const message = document.getElementById("login-message");
+    const submitButton = document.getElementById("submit-button");
+
+    let isSubmitting = false;
+
+    function showMessage(text, state = "error") {
+      message.textContent = text;
+      message.dataset.state = state;
+    }
+
+    togglePassword.addEventListener("click", () => {
+      const showing = passwordInput.type === "text";
+
+      passwordInput.type = showing ? "password" : "text";
+      togglePassword.textContent = showing ? "Show" : "Hide";
+      togglePassword.setAttribute("aria-pressed", String(!showing));
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (isSubmitting) return;
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!username || !password) {
+        showMessage("Enter your administrator username and password.");
+        return;
+      }
+
+      isSubmitting = true;
+      submitButton.disabled = true;
+      submitButton.textContent = "Verifying credentials...";
+      showMessage("", "info");
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          credentials: "same-origin",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Incorrect administrator username or password.");
+          }
+
+          if (response.status === 429) {
+            throw new Error(
+              "Too many login attempts. Please wait before trying again."
+            );
+          }
+
+          throw new Error(
+            result.error || "Unable to sign in. Please try again."
+          );
+        }
+
+        // Confirm the server has established an authenticated session.
+        const sessionResponse = await fetch("/api/me", {
+          method: "GET",
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (!sessionResponse.ok) {
+          throw new Error(
+            "The server session could not be verified. Please try again."
+          );
+        }
+
+        showMessage("Authentication successful. Opening console...", "success");
+
+        window.location.replace("/dashboard.html");
+      } catch (error) {
+        showMessage(
+          error.message || "A connection error occurred. Please try again."
+        );
+      } finally {
+        isSubmitting = false;
+        submitButton.disabled = false;
+        submitButton.textContent = "Sign in securely";
+      }
+    });
+
+    // If a valid administrator session already exists, go to the dashboard.
+    async function checkExistingSession() {
+      try {
+        const response = await fetch("/api/me", {
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (response.ok) {
+          window.location.replace("/dashboard.html");
+        }
+      } catch {
+        // Leave the login form available if the session check cannot connect.
+      }
+    }
+
+    checkExistingSession();
+  </script>
 </body>
-
 </html>
