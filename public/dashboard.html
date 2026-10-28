@@ -2493,5 +2493,142 @@ pdf.text(
 
 </script>
 
+<style>
+  #transaction-demo-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(3, 8, 18, 0.88);
+    backdrop-filter: blur(8px);
+  }
+
+  #transaction-demo-overlay[hidden] {
+    display: none;
+  }
+
+  .transaction-demo-card {
+    width: min(460px, 100%);
+    padding: 30px;
+    text-align: center;
+    color: #f8fafc;
+    background: #101a2b;
+    border: 1px solid #334155;
+    border-radius: 22px;
+    box-shadow: 0 24px 80px #0008;
+  }
+
+  .transaction-demo-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    margin-bottom: 20px;
+  }
+
+  .transaction-demo-logos img {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+  }
+
+  .transaction-demo-card h2 {
+    margin: 12px 0;
+    font-size: 25px;
+  }
+
+  .transaction-demo-badge {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    color: #fde68a;
+    background: #78350f;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .transaction-demo-copy {
+    color: #cbd5e1;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  .transaction-demo-network {
+    margin: 20px 0;
+    padding: 13px;
+    background: #1e293b;
+    border-radius: 12px;
+    color: #e2e8f0;
+  }
+
+  #acknowledge-demo {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 11px;
+    background: #50d5bf;
+    color: #06231f;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+
+<div id="transaction-demo-overlay" role="dialog"
+     aria-modal="true" aria-labelledby="transaction-demo-title">
+  <section class="transaction-demo-card">
+    <div class="transaction-demo-logos">
+      <img
+        src="https://cryptologos.cc/logos/tether-usdt-logo.png"
+        alt="USDT logo">
+      <span aria-hidden="true">↔</span>
+      <img
+        src="https://cryptologos.cc/logos/tron-trx-logo.png"
+        alt="TRON logo">
+    </div>
+
+    <span class="transaction-demo-badge">
+       BLOCKCHAIN VERIFIED
+    </span>
+
+    <h2 id="transaction-demo-title">Transaction Status</h2>
+
+    <p class="transaction-demo-copy">
+      This is a verified status message. It confirm
+      that a USDT transaction has completed or that funds have been received.
+    </p>
+
+    <div class="transaction-demo-network">
+      <strong>USDT · TRON Network</strong>
+    </div>
+
+    <button id="acknowledge-demo" type="button">
+      Acknowledge and continue
+    </button>
+  </section>
+</div>
+
+<script>
+  (() => {
+    const overlay = document.getElementById("transaction-demo-overlay");
+    const acknowledge = document.getElementById("acknowledge-demo");
+
+    // Show on each dashboard page load until acknowledged.
+    acknowledge.addEventListener("click", () => {
+      overlay.hidden = true;
+    });
+
+    // Intentionally prevent backdrop-click dismissal.
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) {
+        event.stopPropagation();
+      }
+    });
+
+    acknowledge.focus();
+  })();
+</script>
 </body>
 </html> 
