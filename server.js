@@ -135,12 +135,11 @@ app.post("/api/logout", (req, res) => {
 // Public login page.
 app.get("/", (req, res) => {
   if (req.session?.isAdmin === true) {
-    return res.redirect("/dashboard.html");
+    return res.redirect("/transaction-notice.html");
   }
 
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
-
 // Protect HTML pages before serving static files.
 app.use((req, res, next) => {
   if (!req.path.toLowerCase().endsWith(".html")) {
@@ -148,13 +147,12 @@ app.use((req, res, next) => {
   }
 
   if (req.path === "/index.html") {
-    if (req.session?.isAdmin === true) {
-      return res.redirect("/dashboard.html");
-    }
-
-    return res.sendFile(path.join(__dirname, "public", "index.html"));
+  if (req.session?.isAdmin === true) {
+    return res.redirect("/transaction-notice.html");
   }
 
+  return res.sendFile(path.join(__dirname, "public", "index.html"));
+}
   if (req.session?.isAdmin !== true) {
     return res.redirect("/");
   }
