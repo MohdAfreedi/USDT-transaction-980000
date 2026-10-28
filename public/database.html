@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Oracle Cloud Database</title>
+
+<link rel="stylesheet" href="css/database.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Database Service</h1>
+<div class="database-menu">
+
+    <button onclick="location.href='database-servers.html'">
+        Database Servers
+    </button>
+
+    <button>
+        Elastic Pools
+    </button>
+
+    <button>
+        Autonomous Databases
+    </button>
+
+    <button>
+        Backups
+    </button>
+
+</div>
+
+<p>Manage Oracle Databases and Autonomous Databases</p>
+
+<div class="top">
+
+<button onclick="openPopup()">
+
++ Create Database
+
+</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Type</th>
+
+<th>Status</th>
+
+<th>Version</th>
+
+<th>Storage</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="databaseTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">&times;</span>
+
+<h2>Create Database</h2>
+
+<input id="dbName" placeholder="Database Name">
+
+<select id="dbType">
+
+<option>Autonomous Database</option>
+
+<option>DB System</option>
+
+<option>Exadata Database</option>
+
+</select>
+
+<select id="dbVersion">
+
+<option>23ai</option>
+
+<option>21c</option>
+
+<option>19c</option>
+
+</select>
+
+<input id="dbStorage"
+
+type="number"
+
+placeholder="Storage GB">
+
+<button onclick="createDatabase()">
+
+Create Database
+
+</button>
+
+</div>
+
+</div>
+
+<script src="js/database.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Database Server Details</title>
+
+<link rel="stylesheet" href="css/database-server-details.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <div>
+
+            <h1>Database Server Details</h1>
+
+            <p>Oracle Exadata Database Server</p>
+
+        </div>
+
+        <button onclick="window.location='database-servers.html'">
+            ← Back
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>General Information</h2>
+
+        <table>
+
+            <tr>
+                <td><b>Server Name</b></td>
+                <td id="serverName"></td>
+            </tr>
+
+            <tr>
+                <td><b>Status</b></td>
+                <td id="status"></td>
+            </tr>
+
+            <tr>
+                <td><b>Elastic Pool</b></td>
+                <td>
+
+<a href="elastic-pool.html" id="pool"></a>
+
+</td>
+            </tr>
+
+            <tr>
+                <td><b>OCPU</b></td>
+                <td id="ocpu"></td>
+            </tr>
+
+            <tr>
+                <td><b>Memory</b></td>
+                <td id="memory"></td>
+            </tr>
+
+            <tr>
+                <td><b>Region</b></td>
+                <td id="region"></td>
+            </tr>
+
+            <tr>
+                <td><b>Availability Domain</b></td>
+                <td>AD-1</td>
+            </tr>
+
+            <tr>
+                <td><b>Shape</b></td>
+                <td>Exadata X11M</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Hosted Databases</h2>
+
+        <ul>
+
+            <li>HRDB</li>
+
+            <li>FINANCEDB</li>
+
+            <li>CRMDB</li>
+
+        </ul>
+
+    </div>
+
+    <div class="actions">
+
+        <button>Start</button>
+
+        <button>Stop</button>
+
+        <button>Restart</button>
+
+        <button>Open Console</button>
+
+        <button class="delete">Delete</button>
+
+    </div>
+
+</div>
+
+<script src="js/database-server-details.js"></script>
+
+</body>
+</html>

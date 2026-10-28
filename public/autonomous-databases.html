@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Autonomous Databases</title>
+
+    <link rel="stylesheet" href="css/autonomous-databases.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div>
+
+            <h1>Autonomous Databases</h1>
+
+            <p>Oracle Autonomous Database Dedicated</p>
+
+        </div>
+
+        <button onclick="openPopup()">
+            + Create Autonomous Database
+        </button>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Name</th>
+                <th>Workload</th>
+                <th>Status</th>
+                <th>CPU</th>
+                <th>Storage</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="adbTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- ===================== POPUP ===================== -->
+
+<div class="popup" id="popup">
+
+    <div class="popup-content">
+
+        <span class="close" onclick="closePopup()">&times;</span>
+
+        <h2>Create Autonomous Database</h2>
+
+        <input
+            type="text"
+            id="dbName"
+            placeholder="Database Name">
+
+        <input
+            type="text"
+            id="displayName"
+            placeholder="Display Name">
+
+        <select id="workload">
+
+            <option>Transaction Processing</option>
+
+            <option>Data Warehouse</option>
+
+            <option>JSON</option>
+
+            <option>APEX</option>
+
+        </select>
+
+        <input
+            type="number"
+            id="cpu"
+            placeholder="CPU Count">
+
+        <input
+            type="number"
+            id="storage"
+            placeholder="Storage (TB)">
+
+        <button onclick="createDatabase()">
+
+            Create Database
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/autonomous-databases.js"></script>
+
+</body>
+
+</html>

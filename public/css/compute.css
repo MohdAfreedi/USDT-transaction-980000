@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f6fa;
+}
+
+.compute-container {
+    padding: 40px;
+}
+
+.compute-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.compute-header h1 {
+    font-size: 32px;
+}
+
+.create-instance-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.create-instance-btn:hover {
+    background: #1d4ed8;
+}
+
+.compute-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.compute-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.compute-table th,
+.compute-table td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.compute-table th {
+    background: #f8fafc;
+}
+
+.status-running {
+    color: green;
+    font-weight: bold;
+}
+
+.status-stopped {
+    color: red;
+    font-weight: bold;
+}
+
+.action-btn {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-content{
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.popup-content input,
+.popup-content select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.popup-content button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.close{
+    align-self:flex-end;
+    cursor:pointer;
+    font-size:28px;
+}
+.green{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+.red{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+.orange{
+    color:#ea580c;
+    font-weight:bold;
+}
+
+.blue{
+    color:#2563eb;
+    font-weight:bold;
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Compute | Afreedi Cloud</title>
+
+    <link rel="stylesheet" href="css/compute.css">
+
+</head>
+
+<body>
+
+<div class="compute-container">
+
+    <div class="compute-header">
+
+        <div>
+            <h1>Compute Instances</h1>
+            <p>Manage your virtual machines and compute resources</p>
+        </div>
+
+        <button class="create-instance-btn" onclick="openPopup()">
+    + Create Instance
+</button>
+
+    </div>
+
+
+    <div class="compute-card">
+
+        <h2>Instances</h2>
+
+        <table class="compute-table">
+
+            <thead>
+
+            <tr>
+
+                <th>Name</th>
+                <th>Status</th>
+                <th>Shape</th>
+                <th>OCPU</th>
+                <th>Memory</th>
+                <th>Public IP</th>
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr>
+
+                <td>Production-Server-01</td>
+
+                <td class="status-running">
+                    ● Running
+                </td>
+
+                <td>VM.Standard.E4.Flex</td>
+
+                <td>4</td>
+
+                <td>32 GB</td>
+
+                <td>152.67.10.25</td>
+
+                <td>
+
+                    <button class="action-btn">
+                        Stop
+                    </button>
+
+                    <button class="action-btn">
+                        Restart
+                    </button>
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Database-Server-01</td>
+
+                <td class="status-running">
+                    ● Running
+                </td>
+
+                <td>VM.Standard.E5.Flex</td>
+
+                <td>8</td>
+
+                <td>64 GB</td>
+
+                <td>129.154.20.18</td>
+
+                <td>
+
+                    <button class="action-btn">
+                        Stop
+                    </button>
+
+                    <button class="action-btn">
+                        Restart
+                    </button>
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Development-Server</td>
+
+                <td class="status-stopped">
+                    ● Stopped
+                </td>
+
+                <td>VM.Standard.E4.Flex</td>
+
+                <td>2</td>
+
+                <td>16 GB</td>
+
+                <td>—</td>
+
+                <td>
+
+                    <button class="action-btn">
+                        Start
+                    </button>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<!-- Create Instance Popup -->
+
+<div class="popup" id="popup">
+
+    <div class="popup-content">
+
+        <span class="close" onclick="closePopup()">&times;</span>
+
+        <h2>Create Compute Instance</h2>
+<input id="instanceName" type="text" placeholder="Instance Name">
+
+<select id="compartment">
+    <option>Select Compartment</option>
+    <option>Production</option>
+    <option>Development</option>
+    <option>Testing</option>
+</select>
+
+<select id="image">
+    <option>Select Image</option>
+    <option>Oracle Linux 9</option>
+    <option>Ubuntu 24.04</option>
+    <option>Windows Server 2025</option>
+</select>
+
+<select id="shape">
+    <option>Select Shape</option>
+    <option>VM.Standard.E5.Flex</option>
+    <option>VM.Standard.E4.Flex</option>
+    <option>VM.Standard.A1.Flex</option>
+</select>
+
+<input id="ocpu" type="number" placeholder="OCPU">
+
+<input id="memory" type="number" placeholder="Memory (GB)">
+
+        <button onclick="createInstance()">Create Instance</button>
+
+    </div>
+
+</div>
+
+<script src="js/compute.js"></script>
+
+</body>
+
+</html>

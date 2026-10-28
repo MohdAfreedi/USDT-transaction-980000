@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Database Servers | Afreedi Cloud</title>
+
+<link rel="stylesheet" href="css/database-servers.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- ================= Sidebar ================= -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+<i class="fa-solid fa-cloud"></i>
+</div>
+
+<div>
+
+<h2>AFREEDI CLOUD</h2>
+
+<p>Enterprise Cloud Platform</p>
+
+</div>
+
+</div>
+
+<nav>
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+<a href="compute.html">
+
+<i class="fa-solid fa-server"></i>
+
+Compute
+
+</a>
+
+<a class="active" href="database-servers.html">
+
+<i class="fa-solid fa-database"></i>
+
+Database
+
+</a>
+
+<a href="storage.html">
+
+<i class="fa-solid fa-hard-drive"></i>
+
+Storage
+
+</a>
+
+<a href="networking.html">
+
+<i class="fa-solid fa-network-wired"></i>
+
+Networking
+
+</a>
+
+<a href="#">
+
+<i class="fa-solid fa-user-shield"></i>
+
+Identity & Security
+
+</a>
+
+<a href="#">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Monitoring
+
+</a>
+
+<a href="#">
+
+<i class="fa-solid fa-wallet"></i>
+
+Billing
+
+</a>
+
+<a href="#">
+
+<i class="fa-solid fa-terminal"></i>
+
+Cloud Shell
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- ================= Main ================= -->
+
+<main class="main">
+
+<!-- ================= Top Bar ================= -->
+
+<header class="topbar">
+
+<div class="search">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input
+type="text"
+placeholder="Search database servers...">
+
+</div>
+
+<div class="top-actions">
+
+<button class="icon-btn">
+
+<i class="fa-regular fa-bell"></i>
+
+</button>
+
+<button class="icon-btn">
+
+<i class="fa-regular fa-circle-question"></i>
+
+</button>
+
+<div class="profile">
+
+<div class="avatar">
+
+MA
+
+</div>
+
+<div>
+
+<strong>Mohd Afreedi</strong>
+
+<p>Cloud Administrator</p>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ================= Breadcrumb ================= -->
+
+<div class="breadcrumb">
+
+Home
+
+<i class="fa-solid fa-angle-right"></i>
+
+Oracle Database
+
+<i class="fa-solid fa-angle-right"></i>
+
+Database Servers
+
+</div>
+
+<!-- ================= Header ================= -->
+
+<section class="page-header">
+
+<div>
+
+<h1>Database Servers</h1>
+
+<p>
+
+Oracle Exadata Infrastructure
+
+</p>
+
+</div>
+
+<button class="create-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Create Database Server
+
+</button>
+
+</section>
+
+<!-- ================= Summary Cards ================= -->
+
+<section class="cards">
+
+
+    <div class="card running-card">
+
+        <div class="card-top">
+
+            <div>
+                <h3>Running Servers</h3>
+                <h2 id="runningCount">0</h2>
+            </div>
+
+            <i class="fa-solid fa-server card-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="card health-card">
+
+        <div class="card-top">
+
+            <div>
+                <h3>Resource Health</h3>
+                <h2>100%</h2>
+            </div>
+
+            <i class="fa-solid fa-heart-circle-check card-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="card cpu-card">
+
+        <div class="card-top">
+
+            <div>
+                <h3>Total OCPU</h3>
+                <h2 id="ocpuCount">0</h2>
+            </div>
+
+            <i class="fa-solid fa-microchip card-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="card memory-card">
+
+        <div class="card-top">
+
+            <div>
+                <h3>Total Memory</h3>
+                <h2 id="memoryCount">0 GB</h2>
+            </div>
+
+            <i class="fa-solid fa-memory card-icon"></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<!-- ================= Filters ================= -->
+
+<section class="filters">
+
+<input
+type="text"
+id="searchServer"
+placeholder="Search server...">
+
+<select id="regionFilter">
+
+<option>All Regions</option>
+
+<option>Phoenix</option>
+
+<option>India South</option>
+
+<option>Frankfurt</option>
+
+</select>
+
+<select id="statusFilter">
+
+<option>All Status</option>
+
+<option>Running</option>
+
+<option>Stopped</option>
+
+</select>
+
+<select id="poolFilter">
+
+<option>All Pools</option>
+
+<option>ELASTIC-POOL-01</option>
+
+<option>ELASTIC-POOL-02</option>
+
+</select>
+
+</section>
+
+<!-- ================= Table ================= -->
+
+<section class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Server Name</th>
+
+<th>Elastic Pool</th>
+
+<th>OCPU</th>
+
+<th>Memory</th>
+
+<th>Status</th>
+
+<th>Region</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="serverTable">
+
+<!-- JavaScript will populate rows -->
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+</div>
+
+<script src="js/database-servers.js"></script>
+
+</body>
+
+</html>

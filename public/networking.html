@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Networking</title>
+
+<link rel="stylesheet" href="css/networking.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Virtual Cloud Networks</h1>
+
+<p>Create and manage OCI networking resources.</p>
+
+<div class="top">
+
+<button onclick="openPopup()">
+
++ Create VCN
+
+</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>CIDR Block</th>
+
+<th>Region</th>
+
+<th>Status</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="vcnTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">&times;</span>
+
+<h2>Create VCN</h2>
+
+<input id="vcnName" placeholder="VCN Name">
+
+<input id="cidr" placeholder="CIDR Block (10.0.0.0/16)">
+
+<select id="region">
+
+<option>India Central</option>
+
+<option>Mumbai</option>
+
+<option>Frankfurt</option>
+
+<option>Phoenix</option>
+
+</select>
+
+<button onclick="createVCN()">
+
+Create VCN
+
+</button>
+
+</div>
+
+</div>
+
+<script src="js/networking.js"></script>
+
+</body>
+
+</html>

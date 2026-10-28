@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Oracle Cloud Console</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- ================= Sidebar ================= -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+
+<i class="fa-solid fa-cloud"></i>
+
+</div>
+
+<div>
+
+<h2>ORACLE CLOUD INFRASTRUCTURE</h2>
+
+<p>Enterprise Cloud Platform</p>
+
+</div>
+
+</div>
+
+<div class="region">
+
+<i class="fa-solid fa-location-dot"></i>
+
+<span>India Central (Mumbai)</span>
+
+</div>
+
+<nav>
+
+<ul>
+
+<li class="active">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Dashboard</span>
+
+</a>
+
+</li>
+
+<li class="menu">
+
+<div class="menu-title" onclick="toggleMenu('computeMenu')">
+
+<div>
+
+<i class="fa-solid fa-server"></i>
+
+<span>Compute</span>
+
+</div>
+
+<i class="fa-solid fa-angle-down"></i>
+
+</div>
+
+<ul class="submenu" id="computeMenu">
+
+<li>
+
+<a href="compute.html">
+
+Instances
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Images
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Boot Volumes
+
+</a>
+
+</li>
+
+</ul>
+
+</li>
+
+<li class="menu">
+
+<div class="menu-title" onclick="toggleMenu('databaseMenu')">
+
+<div>
+
+<i class="fa-solid fa-database"></i>
+
+<span>Database</span>
+
+</div>
+
+<i class="fa-solid fa-angle-down"></i>
+
+</div>
+
+<ul class="submenu" id="databaseMenu">
+
+<li>
+
+<a href="database-servers.html">
+
+Database Servers
+
+</a>
+
+</li>
+
+<li>
+
+<a href="elastic-pool.html">
+
+Elastic Pools
+
+</a>
+
+</li>
+
+<li>
+
+<a href="autonomous-databases.html">
+
+Autonomous Databases
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Exadata Infrastructure
+
+</a>
+
+</li>
+
+</ul>
+
+</li>
+<li>
+
+<a href="storage.html">
+
+<i class="fa-solid fa-hard-drive"></i>
+
+<span>Storage</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="networking.html">
+
+<i class="fa-solid fa-network-wired"></i>
+
+<span>Networking</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="fa-solid fa-users"></i>
+
+<span>Identity & Security</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<span>Monitoring</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Billing</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="fa-solid fa-terminal"></i>
+
+<span>Cloud Shell</span>
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="fa-solid fa-gear"></i>
+
+<span>Settings</span>
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+</aside>
+
+<!-- ================= Main ================= -->
+
+<main class="content">
+
+<header class="topbar">
+
+<div class="search-box">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input
+type="text"
+id="globalSearch"
+placeholder="Search resources, OCID, databases, compute, VCN, storage..."
+autocomplete="off"
+>
+<div class="search-results" id="searchResults">
+
+    <div>Compute Instance - APP-SERVER-01</div>
+
+    <div>Autonomous Database - FINDB</div>
+
+    <div>Dedicated Autonomous Database - 01</div>
+
+    <div>Virtual Cloud Network - PROD-VCN</div>
+
+</div>
+
+</div>
+
+<div class="top-right">
+
+<div class="notification">
+
+   <button class="icon-btn" id="notificationBtn">
+
+<i class="fa-regular fa-bell"></i>
+
+<span class="badge">3</span>
+
+</button>
+    <div class="notification-menu" id="notificationMenu">
+
+    <h3>Notifications</h3>
+<div class="notification-item warning"
+     onclick="showWalletNotice()"
+     style="cursor:pointer;">
+
+  <strong>⚠ Wallet Verification Pending</strong>
+
+  <p>
+    Wallet connection recorded.
+    Receiver transaction verification is pending.
+    Click to view details.
+  </p>
+
+  <small>Action: Verify transaction</small>
+
+</div>
+    <div class="notification-item warning"
+     onclick="showNotificationDetails('resource')">
+
+        <strong>⚠ High Resource Usage</strong>
+
+        <p>
+            <p>
+Critical Warning: Resource utilization has exceeded the recommended threshold.
+Upgrade the Elastic Pool and Autonomous Database to Dedicated Deployment
+within the next 48 hours. Failure to take corrective action may result in
+non-recoverable data loss, database corruption, and prolonged service outages.
+</p>
+        </p>
+
+        <small class="time" data-time="2026-08-10T10:25:00"></small>
+
+    </div>
+
+    <div class="notification-item"
+     onclick="showNotificationDetails('database')">
+
+        <strong>✅ Database Server</strong>
+
+        <p>
+            HRDB restarted successfully.
+        </p>
+
+       <small class="time" data-time="2026-08-10T10:17:00"></small>
+
+    </div>
+
+    <div class="notification-item"
+     onclick="showNotificationDetails('backup')">
+
+        <strong>✅ Backup Completed</strong>
+
+        <p>
+            Nightly backup completed successfully.
+        </p>
+
+        <small class="time" data-time="2026-08-10T09:52:00"></small>
+
+    </div>
+
+</div>
+</div>
+
+<div class="top-selectors">
+
+    <div class="tenancy-selector">
+
+        <i class="fa-solid fa-building"></i>
+
+        <span>Afreedi Production</span>
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+    </div>
+
+    <div class="region-selector">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <span>India Central (Mumbai)</span>
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+    </div>
+
+</div>
+<button class="cloud-shell">
+
+<i class="fa-solid fa-terminal"></i>
+
+Cloud Shell
+
+</button>
+
+<button class="icon-btn">
+
+<i class="fa-regular fa-circle-question"></i>
+
+</button>
+
+<div class="profile">
+
+<div class="avatar">
+
+MA
+
+</div>
+
+<div>
+
+<h4>Mohd Afreedi</h4>
+
+<p>Cloud Administrator</p>
+
+</div>
+
+</div>
+</div>
+
+</header>
+
+<section class="breadcrumb">
+
+Home
+
+<i class="fa-solid fa-angle-right"></i>
+
+Dashboard
+
+</section>
+
+<section class="page-header">
+
+<div>
+
+<h1>Dashboard</h1>
+
+<p>Overview of your cloud resources and services</p>
+
+</div>
+
+<div>
+
+<button class="primary-btn" onclick="openWizard()">
+
+<i class="fa-solid fa-plus"></i>
+
+Create Resource
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= Summary Cards ================= -->
+
+<section class="summary-grid">
+
+<div class="summary-card compute-card">
+
+    <div class="card-header">
+
+        <span class="card-title">Running Compute</span>
+
+        <span class="health-badge healthy">Healthy</span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div>
+
+            <h2 id="computeCount">0</h2>
+
+            <p class="trend positive">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                +2 Today
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-server card-icon"></i>
+
+    </div>
+
+</div>
+<div class="summary-card database-card">
+
+    <div class="card-header">
+
+        <span class="card-title">Autonomous DB</span>
+
+        <span class="health-badge healthy">Healthy</span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div>
+
+            <h2 id="databaseCount">0</h2>
+
+            <p class="trend positive">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                +1 Today
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-database card-icon"></i>
+
+    </div>
+
+</div>
+
+<div class="summary-card storage-card">
+
+    <div class="card-header">
+
+        <span class="card-title">Storage Used</span>
+
+        <span class="health-badge healthy">Healthy</span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div>
+
+            <h2>4.5 TB</h2>
+
+            <p class="trend">
+                Last Updated 2 min ago
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-hard-drive card-icon"></i>
+
+    </div>
+
+</div>
+
+<div class="summary-card network-card">
+
+    <div class="card-header">
+
+        <span class="card-title">Virtual Networks</span>
+
+        <span class="health-badge healthy">Healthy</span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div>
+
+            <h2>3</h2>
+
+            <p class="trend positive">
+                <i class="fa-solid fa-circle-check"></i>
+                Operational
+            </p>
+
+        </div>
+
+        <i class="fa-solid fa-network-wired card-icon"></i>
+
+    </div>
+
+</div>
+
+</section>
+<!-- ================= Resource Usage ================= -->
+
+<section class="dashboard-grid">
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>Resource Usage</h2>
+            <span>Last 24 Hours</span>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="resourceChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>Quick Actions</h2>
+        </div>
+
+        <div class="quick-grid">
+
+            <button onclick="location.href='compute.html'">
+                <i class="fa-solid fa-server"></i>
+                Create Instance
+            </button>
+
+            <button onclick="location.href='autonomous-databases.html'">
+                <i class="fa-solid fa-database"></i>
+                Create Database
+            </button>
+
+            <button onclick="location.href='networking.html'">
+                <i class="fa-solid fa-network-wired"></i>
+                Create VCN
+            </button>
+
+            <button onclick="location.href='storage.html'">
+                <i class="fa-solid fa-hard-drive"></i>
+                Create Storage
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= Recent Work Requests ================= -->
+
+<section class="panel full">
+
+    <div class="panel-header">
+
+        <h2>Recent Work Requests</h2>
+
+        <button class="link-btn">View All</button>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Operation</th>
+
+                <th>Resource</th>
+
+                <th>Status</th>
+
+                <th>Started</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>Create Compute Instance</td>
+
+                <td>APP-SERVER-01</td>
+
+                <td><span class="status success">Succeeded</span></td>
+
+                <td>2 Minutes Ago</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Create Autonomous Database</td>
+
+                <td>HRDB</td>
+
+                <td><span class="status running">In Progress</span></td>
+
+                <td>5 Minutes Ago</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Create Elastic Pool</td>
+
+                <td>ELASTIC-POOL-01</td>
+
+                <td><span class="status success">Succeeded</span></td>
+
+                <td>12 Minutes Ago</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Create VCN</td>
+
+                <td>PRODUCTION-VCN</td>
+
+                <td><span class="status success">Succeeded</span></td>
+
+                <td>20 Minutes Ago</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- ================= Recent Activity ================= -->
+
+<section class="panel full">
+
+    <div class="panel-header">
+
+        <h2>Recent Activity</h2>
+
+    </div>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <div>
+
+                <h4>Compute Instance Created</h4>
+
+                <p>APP-SERVER-01 has been provisioned successfully.</p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <div>
+
+                <h4>Autonomous Database Provisioning</h4>
+
+                <p>HRDB is currently being provisioned.</p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <div>
+
+                <h4>Elastic Pool Updated</h4>
+
+                <p>Resources allocated successfully.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+<!-- ================= USDT Wallet & Database Transactions ================= -->
+
+<section class="panel full usdt-panel">
+
+    <div class="panel-header">
+
+        <div>
+           <h2 class="clickable-resource"
+    onclick="showUSDTWalletDetails()">
+
+    <i class="fa-solid fa-wallet"></i>
+
+    USDT Wallet
+
+</h2>
+
+            <span>
+                Connected to Autonomous Database
+            </span>
+        </div>
+
+        <span class="wallet-status">
+            <i class="fa-solid fa-circle"></i>
+            Connected
+        </span>
+
+    </div>
+
+
+    <!-- Wallet Information -->
+
+    <div class="usdt-wallet-info">
+
+        <div class="wallet-box">
+
+            <span class="wallet-label">
+                Wallet Address
+            </span>
+
+            <strong>
+                TQ4Y9F3s8nZ7pA1X2Y3Z4aBcDeFgHJkLm
+            </strong>
+
+        </div>
+
+
+        <div class="wallet-box">
+
+            <span class="wallet-label">
+                Database
+            </span>
+
+            <strong>
+                AFREEDI-PROD-DB
+            </strong>
+
+        </div>
+
+
+        <div class="wallet-box">
+
+            <span class="wallet-label">
+                Network
+            </span>
+
+            <strong>
+                TRON (TRC20)
+            </strong>
+
+        </div>
+
+
+        <div class="wallet-box">
+
+            <span class="wallet-label">
+                USDT Balance
+            </span>
+
+            <strong class="usdt-balance">
+                5580439.56 USDT
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- Transaction Header -->
+
+    <div class="transaction-header">
+
+        <h3>Recent USDT Transactions</h3>
+        <button class="link-btn" type="button" onclick="openWithdrawalReview()">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Withdrawal Review
+        </button>
+
+        <button class="link-btn">
+            View All
+        </button>
+
+    </div>
+
+
+    <!-- Transaction Table -->
+
+    <div class="transaction-table">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Transaction</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Database</th>
+                    <th>Status</th>
+                    <th>Time</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr class="clickable-transaction"
+    onclick="return false;" title="Received transaction details are not part of the  flow.">
+
+                    <td>
+
+                        <div class="tx-id">
+
+                            <i class="fa-solid fa-arrow-down"></i>
+
+                            <div>
+
+                                <strong>TX-8F42A91C</strong>
+
+                                <small>0x7A••••9F42</small>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>Received</td>
+
+                    <td class="amount positive">
+                        +6560439.56 USDT
+                    </td>
+
+                    <td>AFREEDI-PROD-DB</td>
+
+                    <td>
+
+                        <span class="tx-status confirmed">
+    <i class="fa-solid fa-circle-check"></i>
+    Confirmed
+</span>
+                    </td>
+
+                    <td>
+                        <span class="tx-time"
+                              data-time="2026-03-12T15:05:00">
+                        </span>
+                    </td>
+
+                </tr>
+
+
+               <tr class="clickable-transaction"
+    onclick="window.openTransactionDetails()"
+    style="cursor: pointer;">
+                    <td>
+
+                        <div class="tx-id">
+
+                            <i class="fa-solid fa-arrow-up"></i>
+
+                            <div>
+
+                                <strong>TX-4C91B72E</strong>
+
+                                <small>TTTH••••E9Hn</small>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>Sent</td>
+
+                    <td class="amount negative">
+                        -980000.00 USDT
+                    </td>
+
+                    <td>AFREEDI-PROD-DB</td>
+
+                    <td>
+
+                       <span class="tx-status pending">
+    <i class="fa-solid fa-clock"></i>
+    Blockchain Confirmation Pending
+</span>
+                    </td>
+
+                    <td>
+                        <span class="tx-time"
+                              data-time="2026-08-29T14:42:00">
+                        </span>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+
+                        <div class="tx-id">
+
+                            
+
+                              
+
+                    
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= Cloud Health ================= -->
+
+<section class="dashboard-grid">
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>Cloud Health</h2>
+        </div>
+
+        <table class="health-table">
+
+            <tr>
+                <td>Compute</td>
+                <td><span class="status success">Healthy</span></td>
+            </tr>
+
+            <tr>
+                <td>Database</td>
+                <td><span class="status success">Healthy</span></td>
+            </tr>
+
+            <tr>
+                <td>Networking</td>
+                <td><span class="status success">Healthy</span></td>
+            </tr>
+
+            <tr>
+                <td>Storage</td>
+                <td><span class="status success">Healthy</span></td>
+            </tr>
+
+            <tr>
+                <td>Identity</td>
+                <td><span class="status success">Healthy</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>Service Status</h2>
+        </div>
+
+        <div class="service-status">
+
+            <div class="service">
+                <i class="fa-solid fa-server"></i>
+                <span>Compute</span>
+                <span class="green-dot"></span>
+            </div>
+
+            <div class="service">
+                <i class="fa-solid fa-database"></i>
+                <span>Database</span>
+                <span class="green-dot"></span>
+            </div>
+
+            <div class="service">
+                <i class="fa-solid fa-network-wired"></i>
+                <span>Networking</span>
+                <span class="green-dot"></span>
+            </div>
+
+            <div class="service">
+                <i class="fa-solid fa-hard-drive"></i>
+                <span>Storage</span>
+                <span class="green-dot"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<footer class="footer">
+
+    © 2026  Cloud Platform |
+    Oracle OCI  Console
+
+</footer>
+
+</main>
+
+</div>
+<!-- ================= Resource Wizard ================= -->
+
+<div class="wizard" id="wizard">
+
+    <div class="wizard-box">
+
+        <span class="close" onclick="closeWizard()">&times;</span>
+
+        <h2>Create Resource</h2>
+
+        <p>Select the Oracle Cloud resource you want to create.</p>
+
+        <div class="wizard-grid">
+
+            <div class="wizard-card" onclick="location.href='compute.html'">
+
+                <i class="fa-solid fa-server"></i>
+
+                <h3>Compute</h3>
+
+                <p>Create Virtual Machine</p>
+
+            </div>
+
+            <div class="wizard-card" onclick="location.href='database-servers.html'">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h3>Database Server</h3>
+
+                <p>Exadata Database Server</p>
+
+            </div>
+
+            <div class="wizard-card" onclick="location.href='autonomous-databases.html'">
+
+                <i class="fa-solid fa-cloud"></i>
+
+                <h3>Autonomous Database</h3>
+
+                <p>Create Autonomous DB</p>
+
+            </div>
+
+            <div class="wizard-card" onclick="location.href='elastic-pool.html'">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <h3>Elastic Pool</h3>
+
+                <p>Create Elastic Pool</p>
+
+            </div>
+
+            <div class="wizard-card" onclick="location.href='storage.html'">
+
+                <i class="fa-solid fa-hard-drive"></i>
+
+                <h3>Storage</h3>
+
+                <p>Create Block Storage</p>
+
+            </div>
+
+            <div class="wizard-card" onclick="location.href='networking.html'">
+
+                <i class="fa-solid fa-network-wired"></i>
+
+                <h3>Networking</h3>
+
+                <p>Create VCN</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= USDT TRANSACTION DETAILS — EXCHANGE STYLE ================= -->
+
+
+
+
+<!-- ================= USDT DETAILS MODAL ================= -->
+<div id="usdtDetailsModal" class="usdt-details-modal" aria-hidden="true">
+  <div class="usdt-details-card" role="dialog" aria-modal="true" aria-labelledby="usdtDetailsTitle">
+    <button class="usdt-details-close" type="button" onclick="closeUSDTDetails()" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="usdtDetailsContent"></div>
+  </div>
+</div>
+
+
+<!-- TRANSACTION COMPLETION  POPUP -->
+<div id="transferCompleteModal"
+     class="transfer-complete-modal"
+     aria-hidden="true">
+
+  <div class="transfer-complete-card"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="tcTitle">
+
+    <div class="tc-head">
+      <div>
+        <div class="tc-kicker">
+          USDT • TRON (TRC20) • TX-4C91B72E
+        </div>
+
+        <h2 class="tc-title" id="tcTitle">
+          Transaction processing 
+        </h2>
+
+        <p class="tc-sub">
+          Your  transaction request has been recorded.
+          Review the estimated processing window below.
+        </p>
+      </div>
+
+      <button class="tc-close"
+              type="button"
+              onclick="closeTransferComplete()"
+              aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="tc-body">
+
+      <div class="tc-success">
+        <div class="tc-success-icon">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div>
+          <strong>
+            Your  transaction has been recorded successfully.
+          </strong>
+
+          <span>
+            This interface simulates a processing window of up to
+            24 hours for the receiver-crediting workflow.
+            Actual USDT delivery must be verified independently
+            on the TRON blockchain.
+          </span>
+        </div>
+      </div>
+
+      <div class="tc-amount">
+        <div>
+          <div class="tc-amount-label">TRANSFER AMOUNT</div>
+          <div class="tc-amount-value">980000.00 USDT</div>
+        </div>
+
+        <div class="tc-amount-tag">
+          • VERIFICATION REQUIRED
+        </div>
+      </div>
+
+      <div class="tc-step" style="margin-bottom:14px;">
+        <div class="tc-step-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div style="flex:1;min-width:0;">
+          <div class="tc-step-title">
+            24-hour processing window
+          </div>
+
+          <div class="tc-step-sub">
+            Remaining time is calculated from the saved deadline.
+          </div>
+        </div>
+
+        <div id="transactionCountdown"
+             class="tc-step-status"
+             style="font-size:16px;white-space:nowrap;">
+          24:00:00
+        </div>
+      </div>
+
+      <div class="tc-steps">
+
+        <div class="tc-step">
+          <div class="tc-step-icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+
+          <div>
+            <div class="tc-step-title">
+               request recorded
+            </div>
+
+            <div class="tc-step-sub">
+              Reference TX-4C91B72E
+            </div>
+          </div>
+
+          <div class="tc-step-status">RECORDED</div>
+        </div>
+
+        <div class="tc-step pending">
+          <div class="tc-step-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+
+          <div>
+            <div class="tc-step-title">
+              Blockchain verification
+            </div>
+
+            <div class="tc-step-sub">
+              Confirm the real transaction and destination
+              before treating the funds as credited.
+            </div>
+          </div>
+
+          <div class="tc-step-status">UNVERIFIED</div>
+        </div>
+
+      </div>
+
+      <div class="tc-receiver-box">
+        <div class="tc-receiver-title">
+          Receiver wallet
+        </div>
+
+        <div class="tc-receiver-copy">
+          The  uses the receiver address below.
+          Keep your application server running if required
+          for its monitoring workflow. If a genuine resource
+          bottleneck occurs, review server metrics and consider
+          increasing ECPU when appropriate. ECPU does not
+          guarantee or release a blockchain transfer.
+        </div>
+
+        <div class="tc-wallet-list">
+          <div class="tc-wallet">
+            Receiver • TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tc-actions">
+        <button class="tc-btn"
+                type="button"
+                onclick="closeTransferComplete()">
+          Close
+        </button>
+
+        <button class="tc-btn"
+                type="button"
+                onclick="closeTransferComplete(); showTransactionDetails('sent', true)">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          View transaction details
+        </button>
+
+        <button class="tc-btn primary"
+                type="button"
+                onclick="downloadAcknowledgementReceipt()">
+          <i class="fa-solid fa-download"></i>
+          Download  receipt
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- END TRANSACTION COMPLETION POPUP -->
+<div id="transactionModal" class="tx-explorer-modal" aria-hidden="true">
+    <div class="tx-explorer">
+
+        <div class="tx-explorer-top">
+            <div class="tx-explorer-nav">
+                <button class="tx-back-btn" onclick="closeTransactionDetails()">
+                    <i class="fa-solid fa-arrow-left"></i> Transaction
+                </button>
+
+                <div class="tx-live-chip">
+                    <span class="tx-live-dot"></span>
+                    LIVE STATUS
+                </div>
+
+                <button class="tx-close-btn" onclick="closeTransactionDetails()" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="tx-explorer-title-row">
+                <div>
+                    <div class="tx-kicker">USDT • TRON (TRC20)</div>
+                    <h2 class="tx-main-title" id="txUiTitle">980000.00 USDT transfer</h2>
+                    <p class="tx-subtitle" id="txUiSubtitle">
+                        Server Wallet → Trust Wallet • TX-4C91B72E
+                    </p>
+                </div>
+
+                <div class="tx-status-pill" id="txUiStatus">
+    <i class="fa-solid fa-circle-check"></i>
+    Completed
+</div> 
+<button
+    type="button"
+    onclick="window.downloadAcknowledgementReceipt()"
+    class="tx-verify-btn">
+    <i class="fa-solid fa-file-pdf"></i>
+    Download PDF
+</button>
+
+</div>
+
+            <div class="tx-verify-bar">
+                <div class="tx-verify-copy">
+                    <strong>Verify on TRON network</strong>
+                    <span>Paste a real 64-character TRON transaction hash to load verified on-chain data.</span>
+                </div>
+                <div class="tx-verify-controls">
+                    <input id="realTxHash"
+                           class="tx-hash-input"
+                           type="text"
+                           maxlength="64"
+                           spellcheck="false"
+                           autocomplete="off"
+                           placeholder="Enter real TRON TXID">
+                    <button class="tx-verify-btn" type="button" onclick="verifyRealTransaction()">
+                        <i class="fa-solid fa-shield-check"></i>
+                        Verify
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tx-explorer-body">
+
+            <div class="tx-route">
+                <div class="tx-wallet-card">
+                    <div class="tx-wallet-head">
+                        <div class="tx-wallet-icon">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+                        <div>
+                            <div class="tx-wallet-role">Sender</div>
+                            <div class="tx-wallet-name">Server Wallet</div>
+                        </div>
+                    </div>
+
+                    <div class="tx-wallet-address">
+                        <span id="txSenderAddress">TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</span>
+                        <button class="tx-copy" onclick="copyTxValue('txSenderAddress')">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tx-route-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <div class="tx-wallet-card destination">
+                    <div class="tx-wallet-head">
+                        <div class="tx-wallet-icon">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div>
+                            <div class="tx-wallet-role">Destination</div>
+                            <div class="tx-wallet-name">Trust Wallet</div>
+                        </div>
+                    </div>
+
+                    <div class="tx-wallet-address">
+                        <span id="txReceiverAddress">TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn</span>
+                        <button class="tx-copy" onclick="copyTxValue('txReceiverAddress')">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tx-amount-panel">
+                <div>
+                    <div class="tx-amount-label">Transfer amount</div>
+                    <div class="tx-amount-value" id="txUiAmount">980000.00 USDT</div>
+                </div>
+
+                <div class="tx-token-chip">
+                    <span class="tx-token-dot"></span>
+                    TRON / TRC20
+                </div>
+            </div>
+
+
+            <!-- Professional Oracle DB runtime status -->
+            <section class="db-runtime-panel" aria-label="Database runtime health">
+                <div class="db-runtime-header">
+                    <div class="db-runtime-title">
+                        <div class="db-runtime-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div>
+                            <h3>AFREEDI-PROD-DB • Database Runtime</h3>
+                            <p>Oracle Database 19c • Production database service</p>
+                        </div>
+                    </div>
+                    <div class="db-runtime-status">
+                        <span class="dot"></span>
+                        CONNECTED • UP
+                    </div>
+                </div>
+
+                <div class="db-runtime-body">
+                    <div class="db-runtime-grid">
+                        <div class="db-metric">
+                            <div class="db-metric-label">Instance</div>
+                            <div class="db-metric-value">AFREEDI1</div>
+                        </div>
+                        <div class="db-metric">
+                            <div class="db-metric-label">Open Mode</div>
+                            <div class="db-metric-value green">READ WRITE</div>
+                        </div>
+                        <div class="db-metric">
+                            <div class="db-metric-label">Listener</div>
+                            <div class="db-metric-value green">ONLINE :1521</div>
+                        </div>
+                        <div class="db-metric">
+                            <div class="db-metric-label">DB Role</div>
+                            <div class="db-metric-value">PRIMARY</div>
+                        </div>
+                    </div>
+
+                    <div class="db-health-grid">
+                        <div class="db-health-card">
+                            <h4>Live Resource Telemetry</h4>
+
+                            <div class="db-health-row">
+                                <span class="db-health-name">CPU Utilization</span>
+                                <div class="db-health-track"><div class="db-health-fill" style="width:32%"></div></div>
+                                <span class="db-health-value">32%</span>
+                            </div>
+
+                            <div class="db-health-row">
+                                <span class="db-health-name">Memory Usage</span>
+                                <div class="db-health-track"><div class="db-health-fill" style="width:68%"></div></div>
+                                <span class="db-health-value">68%</span>
+                            </div>
+
+                            <div class="db-health-row">
+                                <span class="db-health-name">Storage Usage</span>
+                                <div class="db-health-track"><div class="db-health-fill" style="width:45%"></div></div>
+                                <span class="db-health-value">7.1/ 10 TB</span>
+                            </div>
+
+                            <div class="db-health-row">
+                                <span class="db-health-name">Active Sessions</span>
+                                <div class="db-health-track"><div class="db-health-fill" style="width:18%"></div></div>
+                                <span class="db-health-value">194/ 1000</span>
+                            </div>
+                        </div>
+
+                        <div class="db-health-card">
+                            <h4>Database Health Checks</h4>
+                            <div class="db-checks">
+                                <div class="db-check">
+                                    <div class="db-check-left"><i class="fa-solid fa-circle-check"></i><span>SQL*Net connectivity</span></div>
+                                    <span class="db-check-status">PASS</span>
+                                </div>
+                                <div class="db-check">
+                                    <div class="db-check-left"><i class="fa-solid fa-circle-check"></i><span>Database instance</span></div>
+                                    <span class="db-check-status">OPEN</span>
+                                </div>
+                                <div class="db-check">
+                                    <div class="db-check-left"><i class="fa-solid fa-circle-check"></i><span>Listener service</span></div>
+                                    <span class="db-check-status">ONLINE</span>
+                                </div>
+                                <div class="db-check">
+                                    <div class="db-check-left"><i class="fa-solid fa-circle-check"></i><span>Archive log</span></div>
+                                    <span class="db-check-status">NORMAL</span>
+                                </div>
+                                <div class="db-check">
+                                    <div class="db-check-left"><i class="fa-solid fa-circle-check"></i><span>RMAN backup</span></div>
+                                    <span class="db-check-status">SUCCESS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="db-runtime-foot">
+                        <span>Connection: <strong>AFREEDI-PROD-DB:1521/AFREEDI</strong></span>
+                        <span>Health check <strong id="dbHealthTime">just now</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tx-grid">
+
+                <div class="tx-panel">
+                    <div class="tx-panel-title">
+                        <h3>Confirmation progress</h3>
+                        <span id="txLiveTime">Updating now</span>
+                    </div>
+
+                    <div class="tx-progress-wrap">
+                        <div class="tx-progress-row">
+                            <span class="tx-progress-label">Network confirmation</span>
+                            <span class="tx-progress-percent" id="txUiConfirmations">100%</span>
+                        </div>
+
+                        <div class="tx-progress-track">
+                            <div class="tx-progress-fill" id="txUiProgress" style="width:100%;"></div>
+                        </div>
+
+                        <div class="tx-progress-note">
+                            Waiting for blockchain confirmation. Verified values appear here after a real TXID is checked.
+                        </div>
+
+                        <div class="tx-confirmations" aria-label="96 percent confirmation progress">
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation active"></span>
+                            <span class="tx-confirmation partial"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tx-panel">
+                    <div class="tx-panel-title">
+                        <h3>Transaction activity</h3>
+                        <span>Live view</span>
+                    </div>
+
+                    <div class="tx-activity">
+                        <div class="tx-activity-item">
+                            <div class="tx-activity-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <div class="tx-activity-title">Transfer request created</div>
+                                <div class="tx-activity-sub">Server wallet submitted the transfer request.</div>
+                            </div>
+                            <div class="tx-activity-time">03:40 AM</div>
+                        </div>
+
+                        <div class="tx-activity-item">
+                            <div class="tx-activity-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <div class="tx-activity-title">Wallet details validated</div>
+                                <div class="tx-activity-sub">Destination address and network recorded.</div>
+                            </div>
+                            <div class="tx-activity-time">03:41 PM</div>
+                        </div>
+
+                        <div class="tx-activity-item">
+                          <div class="tx-activity-icon connected">
+    <i class="fa-solid fa-check"></i>
+</div>  <div>
+                                <div class="tx-activity-title">Connected</div>
+<div class="tx-activity-sub">Connection status updated.</div>
+                            </div>
+                            <div class="tx-activity-time">LIVE</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tx-panel" style="margin-top:16px;">
+                <div class="tx-panel-title">
+                    <h3>Transaction details</h3>
+                    <span>Transfer record</span>
+                </div>
+
+                <div class="tx-details">
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Status</div>
+                       <div class="tx-detail-value" id="txUiDetailStatus">Completed</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Transaction ID</div>
+                        <div class="tx-detail-value tx-mono">TX-4C91B72E</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Transaction hash</div>
+                        <div class="tx-detail-value tx-mono" id="txUiHash">7c9a••••••••••••••••••••••••••42f1</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Sender wallet</div>
+                        <div class="tx-detail-value tx-mono" id="txUiSender">TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Receiver wallet</div>
+                        <div class="tx-detail-value tx-mono" id="txUiReceiver">TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Network</div>
+                        <div class="tx-detail-value">
+                            <span class="tx-network">
+                                <span class="tx-network-dot"></span>
+                                TRON (TRC20)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Amount</div>
+                        <div class="tx-detail-value" id="txUiDetailAmount">980000.00 USDT</div>
+                    </div>
+
+                    
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Database record</div>
+                        <div class="tx-detail-value">AFREEDI-PROD-DB</div>
+                    </div>
+
+                    <div class="tx-detail-row">
+                        <div class="tx-detail-label">Last updated</div>
+                        <div class="tx-detail-value" id="txLastUpdated">—</div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+<div id="withdrawalReviewModal" class="withdrawal-review-modal" aria-hidden="true">
+  <div class="withdrawal-review">
+    <div class="wr-head">
+      <div><div class="wr-kicker">Oracle Cloud • Withdrawal Review</div><h2 class="wr-title">Transaction Completed</h2><p class="wr-sub">Receiver-wallet authentication record</p></div>
+      <span class="wr-complete">COMPLETED •  RECORD</span>
+    </div>
+    <div class="wr-body">
+      <div class="wr-notice"><strong>Receiver confirmation required:</strong> the server currently contains two receiver wallet addresses for this transaction. This screen lists both stored addresses so the operator can resolve the conflict before treating either wallet as the authenticated destination.</div>
+      <div class="wr-wallets">
+        <button class="wr-wallet clickable primary" type="button" onclick="showWalletAlignment('TAbD4yCXMxJqAQ29pCLodk6vu7vYC6YWjy','Stored receiver wallet 01')"><label>Stored receiver wallet 01</label><code>TAbD4yCXMxJqAQ29pCLodk6vu7vYC6YWjy</code></button>
+        <button class="wr-wallet clickable" type="button" onclick="showWalletAlignment('TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn','Stored receiver wallet 02')"><label>Stored receiver wallet 02</label><code>TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn</code></button>
+      </div>
+      <div class="receiver-conflict"><div class="receiver-conflict-title"><i class="fa-solid fa-triangle-exclamation"></i> Receiver address conflict detected</div><p>Two wallet records are associated with the server-side transaction. Do not mark a specific receiver as authenticated until the transaction record or on-chain transfer independently confirms the destination.</p><div class="addr-list"><div class="addr">01 • TAbD4yCXMxJqAQ29pCLodk6vu7vYC6YWjy</div><div class="addr">02 • TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn</div></div></div>
+      <div class="wr-actions"><button class="wr-close" onclick="closeWithdrawalReview()">Close Review</button></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="walletAlignmentModal" class="wallet-align-modal" aria-hidden="true">
+  <div class="wallet-align-card" role="dialog" aria-modal="true" aria-labelledby="wamTitle">
+    <div class="wam-head">
+      <div><div class="wam-kicker">Oracle Cloud • Wallet Authentication</div><h2 class="wam-title" id="wamTitle">Wallet alignment required</h2></div>
+    </div>
+    <div class="wam-body">
+      <div class="wam-icon"><i class="fa-solid fa-link"></i></div>
+      <p class="wam-message">Please align your authenticated wallet on the third-party blockchain where your amount is going to be reflected.</p>
+      <p class="wam-detail">The selected wallet is currently stored as a receiver candidate in this server record. Verify that the same destination wallet is used by the third-party blockchain transfer before treating the amount as received.</p>
+      <div class="wam-wallet"><span class="wam-wallet-label" id="wamWalletLabel">Selected receiver wallet</span><span id="wamWalletAddress">—</span></div>
+     
+      <div class="wam-actions"><button class="wam-close" type="button" onclick="closeWalletAlignment()">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="txToast" class="tx-toast">Copied</div>
+
+
+
+<script>
+(() => {
+  //  ONLY — this timer does not track blockchain settlement.
+  const STORAGE_KEY = "afreedi_countdown_deadline";
+  const MIN_TIME = 30 * 60 * 1000;        // 30 minutes
+  const MAX_TIME = 48 * 60 * 60 * 1000;   // 48 hours
+
+  function getDeadline() {
+    let deadline = Number(localStorage.getItem(STORAGE_KEY));
+
+    if (!Number.isFinite(deadline) || deadline <= 0) {
+      const duration =
+        MIN_TIME + Math.random() * (MAX_TIME - MIN_TIME);
+
+      deadline = Date.now() + duration;
+      localStorage.setItem(STORAGE_KEY, String(deadline));
+    }
+
+    return deadline;
+  }
+
+  let deadline = getDeadline();
+
+  function updateCountdown() {
+    const remaining = Math.max(0, deadline - Date.now());
+
+    const hours = Math.floor(remaining / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    const formatted = [
+      String(hours).padStart(2, "0"),
+      String(minutes).padStart(2, "0"),
+      String(seconds).padStart(2, "0")
+    ].join(":");
+
+    // Update every countdown display in the dashboard.
+    document.querySelectorAll(
+      "#transactionCountdown, #usdtCountdown, #txCountdown, #tx\\ Countdown"
+    ).forEach(element => {
+      element.textContent = formatted;
+    });
+
+    if (remaining <= 0) {
+      clearInterval(timer);
+    }
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+})();
+</script>
+
+
+    
+
+
+
+<!-- USDT Transaction Details Drawer -->
+<div id="usdtTransactionOverlay" class="usdt-overlay"
+     aria-hidden="true">
+
+  <aside class="usdt-drawer" role="dialog"
+         aria-modal="true"
+         aria-labelledby="usdtDrawerTitle">
+
+    <header class="usdt-drawer-header">
+      <div class="usdt-brand">◆ Server wallet</div>
+
+      <button class="usdt-close" onclick="closeUSDTTransaction()"
+              aria-label="Close transaction details">×</button>
+    </header>
+
+    <div class="usdt-drawer-content">
+
+      <div class="usdt-heading">
+        <div>
+          <small>USDT · TRON (TRC20) · TX-4C91B72E</small>
+          <h2 id="usdtDrawerTitle">Transaction details</h2>
+          <p>Review your transaction information below.</p>
+        </div>
+      </div>
+
+      <section class="usdt-hero">
+        
+<div class="usdt-token-icon">
+  <span class="usdt-tether-symbol">₮</span>
+  <span class="tron-token-badge" title="TRON network">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M5 7 L26 12 L17 27 Z"
+            fill="none" stroke="white" stroke-width="3"
+            stroke-linejoin="round"/>
+      <path d="M5 7 L17 27 L15 12 Z"
+            fill="white" opacity="0.9"/>
+    </svg>
+  </span>
+</div>
+
+        <h1>980,000.00 USDT</h1>
+        <p>TRON (TRC20) ·   transaction</p>
+      </section>
+
+      <div class="usdt-detail-row">
+        <span>Status</span>
+        <strong class="usdt-warning">  Confirmed</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>Time remaining</span>
+        <strong id="usdtCountdown">24:00:00</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>From</span>
+        <strong>TNXoiAJ3dct8Fjg4M9fkLFh9S2v9TXc32G</strong>
+      </div>
+
+      
+<div class="usdt-detail-row usdt-recipient-row">
+  <span>To</span>
+
+  <div class="usdt-recipient-details">
+    <div class="usdt-recipient-address">
+      <code id="usdtReceiver">TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn</code>
+
+      <span class="usdt-outgoing-arrow" aria-label="Outgoing transfer">
+        ↗
+      </span>
+    </div>
+
+    <button class="usdt-copy"
+            onclick="copyUSDTReceiver()">
+      Copy address
+    </button>
+  </div>
+</div>
+
+
+      <div class="usdt-detail-row">
+        <span>Transaction hash</span>
+        <strong>ce458e68377f16dda97421e576ad.....d2a2041d92f0e214371d9adc01f5935</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>Amount</span>
+        <strong>980,000.00 USDT</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>Network fee</span>
+        <strong>7.9 TRX</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>Token</span>
+        <strong>USDT</strong>
+      </div>
+
+      <div class="usdt-detail-row">
+        <span>Network</span>
+        <strong>TRON (TRC20)</strong>
+      </div>
+
+      <div class="usdt- -note">
+        
+    </div>
+  </aside>
+</div>
+
+<!-- Example trigger. Keep your existing Sent button if you already have one. -->
+<!-- <button onclick="openUSDTTransaction()">View transaction details</button> -->
+<!-- ===== Afreedi Cloud Transaction Drawer ===== -->
+
+<div id="tx Overlay" aria-hidden="true"></div>
+
+<aside
+  id="tx Drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="tx Title"
+  aria-hidden="true"
+>
+  <div class="tx- -header">
+    <div class="tx- -brand">◆ Server wallet</div>
+    <button
+      type="button"
+      class="tx- -close"
+      id="tx Close"
+      aria-label="Close transaction details"
+    >×</button>
+  </div>
+
+  <div class="tx- -content">
+    <div class="tx- -title-row">
+      <button
+        type="button"
+        class="tx- -back"
+        id="tx Back"
+        aria-label="Close transaction details"
+      >←</button>
+      <h2 class="tx- -title" id="tx Title">
+        Transaction details
+      </h2>
+    </div>
+
+    <div class="tx- -hero">
+      <div class="tx- -token" aria-label="Tether USDT">₮</div>
+      <p class="tx- -amount">980,000.00 USDT</p>
+      <div class="tx- -network-subtitle">
+        TRON (TRC20) ·   transaction
+      </div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Status</div>
+      <div class="tx- -value tx- -status">Confirmed</div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Time remaining</div>
+      <div class="tx- -value tx- -countdown" id="tx Countdown">
+        12:00:00
+      </div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">From</div>
+      <div class="tx- -value">TNXoiAJ3dct8Fjg4M9fkLFh9S2v9TXc32G</div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">To</div>
+      <div class="tx- -value tx- -address-wrap">
+        <span class="tx- -address" id="tx Receiver">
+          TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn
+        </span>
+        <button type="button" class="tx- -copy" id="tx Copy">
+          Copy address
+        </button>
+      </div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Hash</div>
+      <div class="tx- -value">461571431ba1947d0f3a7739......e74a9ecbc1b59f5840e9e9a47a89</div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Amount</div>
+      <div class="tx- -value">980,000.00 USDT</div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Network fee</div>
+      <div class="tx- -value">7.9 TRX</div>
+    </div>
+
+    <div class="tx- -row">
+      <div class="tx- -label">Network</div>
+      <div class="tx- -value">TRON</div>
+    </div>
+
+    <div class="tx- -notice">
+      <strong> nstration only.</strong>
+      This panel displays sample information and a local countdown.
+      It does not verify a blockchain transfer or guarantee that funds
+      will be credited. Check the transaction hash on a trusted blockchain
+      explorer to confirm its actual status.
+    </div>
+  </div>
+</aside>
+
+<div id="walletNoticeOverlay" class="wallet-notice-overlay">
+
+  <div class="wallet-notice-card">
+
+    <button class="wallet-notice-close"
+            onclick="closeWalletNotice()">
+      &times;
+    </button>
+
+    <div class="wallet-notice-icon">⚠</div>
+
+    <h2>Wallet Verification Notice</h2>
+
+    <p>
+      Your wallet connection has been recorded
+      in the  server.
+    </p>
+
+    <div class="wallet-notice-warning">
+
+      <strong>Receiver Verification Pending</strong>
+
+      <p>
+        The receiver's transaction status has not
+        yet been independently verified on the
+        TRON blockchain.
+      </p>
+
+    </div>
+
+    <p>
+      Verify the transaction hash, destination wallet
+      address, TRC20 token contract, and transaction
+      result using an independent blockchain explorer.
+    </p>
+
+
+    <button class="wallet-notice-action"
+            onclick="closeWalletNotice()">
+      Close Notice
+    </button>
+
+  </div>
+
+</div>
+
+<style>
+.wallet-notice-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 99999;
+  justify-content: flex-end;
+}
+
+.wallet-notice-card {
+  width: min(440px, 100%);
+  height: 100%;
+  background: #ffffff;
+  padding: 35px 28px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: -8px 0 30px rgba(0,0,0,0.15);
+  font-family: Inter, Arial, sans-serif;
+  color: #172033;
+}
+
+.wallet-notice-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.wallet-notice-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.wallet-notice-card h2 {
+  font-size: 23px;
+  margin-bottom: 18px;
+}
+
+.wallet-notice-card p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #475569;
+}
+
+.wallet-notice-warning {
+  background: #fff7ed;
+  border-left: 4px solid #f59e0b;
+  padding: 18px;
+  margin: 22px 0;
+  border-radius: 8px;
+}
+
+.wallet-notice-action {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+}
+</style>
+
+<script>
+function showWalletNotice() {
+  document.getElementById("walletNoticeOverlay")
+    .style.display = "flex";
+}
+
+function closeWalletNotice() {
+  document.getElementById("walletNoticeOverlay")
+    .style.display = "none";
+}
+</script>
+<script src="js/dashboard.js"></script>
+
+<script>
+
+window.downloadAcknowledgementReceipt = function () {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+        alert("PDF library is not loaded. Check your internet connection and refresh.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+    });
+
+    // ===== PREMIUM CRYPTO WALLET THEME =====
+    const C = {
+        bg: [11, 17, 29],
+        card: [19, 28, 43],
+        card2: [24, 36, 52],
+        green: [20, 210, 155],
+        greenDark: [10, 80, 67],
+        white: [241, 246, 252],
+        muted: [145, 160, 180],
+        border: [44, 59, 77],
+        amber: [255, 190, 70],
+        amberDark: [80, 58, 20]
+    };
+
+    const W = 210;
+    const H = 297;
+    const M = 14;
+    const CW = W - M * 2;
+
+    const getText = (id, fallback) => {
+        const el = document.getElementById(id);
+        return el && el.textContent.trim()
+            ? el.textContent.trim()
+            : fallback;
+    };
+
+    const roundedCard = (x, y, w, h, fill = C.card) => {
+        pdf.setFillColor(...fill);
+        pdf.setDrawColor(...C.border);
+        pdf.setLineWidth(0.35);
+        pdf.roundedRect(x, y, w, h, 3, 3, "FD");
+    };
+
+    const label = (text, x, y) => {
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(7.5);
+        pdf.setTextColor(...C.muted);
+        pdf.text(String(text).toUpperCase(), x, y);
+    };
+
+    const value = (text, x, y, maxWidth = 170, size = 9) => {
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(size);
+        pdf.setTextColor(...C.white);
+        const lines = pdf.splitTextToSize(String(text), maxWidth);
+        pdf.text(lines, x, y);
+        return lines.length;
+    };
+
+    const drawBackground = () => {
+        pdf.setFillColor(...C.bg);
+        pdf.rect(0, 0, W, H, "F");
+    };
+
+    const amount = getText("txUiDetailAmount", "980000.00 USDT");
+    const status = getText(
+        "txUiDetailStatus",
+        "Completed — dashboard display only"
+    );
+    const txRef = "TX-4C91B72E";
+    const network = "TRON (TRC20)";
+    const sender = getText(
+        "txUiSender",
+        "TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G"
+    );
+    const receiver = getText(
+        "txUiReceiver",
+        "TTTHnNEBykkco6fPA7e9w4kP3FjJuRE9Hn"
+    );
+    const txHash = getText(
+        "txUiHash",
+        "Masked in dashboard — full hash not supplied"
+    );
+    const generated = new Date().toLocaleString();
+
+    drawBackground();
+
+    // ===== TOP BRAND HEADER =====
+    pdf.setFillColor(...C.green);
+    pdf.roundedRect(M, 13, 12, 12, 3, 3, "F");
+
+    pdf.setFillColor(...C.bg);
+    pdf.circle(M + 6, 19, 3.1, "F");
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(16);
+    pdf.setTextColor(...C.white);
+    pdf.text("SERVER", M + 17, 18);
+
+    pdf.setTextColor(...C.green);
+    pdf.text("WALLET", M + 17 + pdf.getTextWidth("SERVER ") + 2, 18);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8);
+    pdf.setTextColor(...C.muted);
+    pdf.text("DIGITAL ASSET TRANSACTION REPORT", M + 17, 24);
+
+    // 
+    pdf.setFillColor(...C.amberDark);
+    pdf.roundedRect(135, 13, 61, 10, 3, 3, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.amber);
+    pdf.text("  VERIFIED", 165.5, 19.3, { align: "center" });
+
+    pdf.setDrawColor(...C.border);
+    pdf.line(M, 31, W - M, 31);
+
+    // ===== AMOUNT HERO CARD =====
+    roundedCard(M, 37, CW, 47, C.card);
+
+    pdf.setFillColor(...C.green);
+    pdf.roundedRect(M + 7, 44, 12, 12, 3, 3, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.bg);
+    pdf.text("T", M + 13, 51.7, { align: "center" });
+
+    label("USDT transfer amount", M + 24, 47);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(24);
+    pdf.setTextColor(...C.white);
+    pdf.text(amount, M + 7, 65, {
+        maxWidth: CW - 14
+    });
+
+    pdf.setFillColor(...C.greenDark);
+    pdf.roundedRect(M + 7, 71, 37, 7, 2, 2, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.green);
+    pdf.text("TRC20 NETWORK", M + 25.5, 75.6, { align: "center" });
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.muted);
+    pdf.text("Reference: " + txRef, W - M - 7, 76, {
+        align: "right"
+    });
+
+    // ===== SENDER AND RECEIVER CARDS =====
+    const gap = 5;
+    const walletW = (CW - gap) / 2;
+    const walletY = 90;
+    const walletH = 39;
+
+    roundedCard(M, walletY, walletW, walletH);
+    roundedCard(M + walletW + gap, walletY, walletW, walletH);
+
+    label("Sender wallet", M + 6, walletY + 9);
+    value(sender, M + 6, walletY + 17, walletW - 12, 7);
+
+    label("Receiver wallet", M + walletW + gap + 6, walletY + 9);
+    value(receiver, M + walletW + gap + 6, walletY + 17, walletW - 12, 7);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.green);
+    pdf.text("SENDER", M + 6, walletY + 32);
+    pdf.text("DESTINATION", M + walletW + gap + 6, walletY + 32);
+
+    // ===== TRANSACTION DETAILS =====
+    const detailsY = 136;
+    roundedCard(M, detailsY, CW, 76);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(11);
+    pdf.setTextColor(...C.white);
+    pdf.text("Transaction details", M + 7, detailsY + 10);
+
+    pdf.setDrawColor(...C.border);
+    pdf.line(M + 7, detailsY + 14, W - M - 7, detailsY + 14);
+
+    const rows = [
+        ["Transaction reference", txRef],
+        ["Network", network],
+        ["Dashboard status", status],
+        ["Transaction hash", txHash],
+        ["Database record", "AFREEDI-PROD-DB"],
+        ["Report generated", generated]
+    ];
+
+    let rowY = detailsY + 22;
+    const labelX = M + 7;
+    const valueX = M + 59;
+    const valueWidth = CW - 68;
+
+    rows.forEach(([k, v]) => {
+        label(k, labelX, rowY);
+        const lineCount = value(v, valueX, rowY, valueWidth, 7.5);
+        const rowHeight = Math.max(7, lineCount * 3.7 + 3);
+        pdf.setDrawColor(...C.border);
+        pdf.line(M + 7, rowY + 3, W - M - 7, rowY + 3);
+        rowY += rowHeight;
+    });
+
+    // ===== ACTIVITY TIMELINE =====
+    const activityY = 218;
+    roundedCard(M, activityY, CW, 37);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(10);
+    pdf.setTextColor(...C.white);
+    pdf.text("Activity timeline", M + 7, activityY + 9);
+
+    const activities = [
+        "Transfer request created",
+        "Wallet details validated",
+        "Connection status updated"
+    ];
+
+    activities.forEach((item, i) => {
+        const cy = activityY + 17 + i * 7;
+
+        pdf.setFillColor(...C.greenDark);
+        pdf.circle(M + 10, cy, 2, "F");
+
+        pdf.setDrawColor(...C.green);
+        pdf.setLineWidth(0.6);
+        pdf.line(M + 9, cy, M + 10, cy + 1);
+        pdf.line(M + 10, cy + 1, M + 12, cy - 1);
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(8);
+        pdf.setTextColor(...C.white);
+        pdf.text(item, M + 16, cy + 1);
+    });
+
+    // ===== VERIFICATION NOTICE =====
+    roundedCard(M, 260, CW, 23, [35, 30, 22]);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    pdf.setTextColor(...C.amber);
+    pdf.text("VERIFICATION NOTICE", M + 6, 267);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.white);
+
+    
+const disclaimer =
+    "This is a report, an official blockchain receipt, " +
+    "The displayed status and progress prove settlement or receiver credit. " 
+    
+pdf.text(
+    pdf.splitTextToSize(disclaimer, CW - 12),
+    M + 6,
+    272
+);
+
+        
+    pdf.text(pdf.splitTextToSize(disclaimer, CW - 12), M + 6, 272);
+
+    // ===== FOOTER =====
+    pdf.setDrawColor(...C.border);
+    pdf.line(M, 288, W - M, 288);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7);
+    pdf.setTextColor(...C.muted);
+    pdf.text(" SERVER WALLET  •  TRANSACTION REPORT", M, 293);
+    
+    // Download with the requested filename
+    pdf.save("TXN$980000.pdf");
+};
+
+</script>
+
+</body>
+</html> 

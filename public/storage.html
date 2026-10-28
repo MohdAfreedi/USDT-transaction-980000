@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Block Volumes</title>
+
+<link rel="stylesheet" href="css/storage.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Block Volumes</h1>
+
+<p>Create and manage block storage volumes.</p>
+
+<div class="top">
+
+<button onclick="openPopup()">
+
++ Create Volume
+
+</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Size</th>
+
+<th>Status</th>
+
+<th>Attached To</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="volumeTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">&times;</span>
+
+<h2>Create Block Volume</h2>
+
+<input id="volumeName" placeholder="Volume Name">
+
+<input id="volumeSize" type="number" placeholder="Size (GB)">
+
+<select id="attachedTo">
+
+<option>Not Attached</option>
+
+<option>APP-SERVER-01</option>
+
+<option>WEB-01</option>
+
+</select>
+
+<button onclick="createVolume()">
+
+Create Volume
+
+</button>
+
+</div>
+
+</div>
+
+<script src="js/storage.js"></script>
+
+</body>
+
+</html>
