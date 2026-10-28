@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChainScope | Network Details</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 28px; background: #0b1220;
+      color: #f1f5f9; font-family: Arial, sans-serif;
+    }
+    main { max-width: 1050px; margin: auto; }
+    .muted { color: #aab7c8; line-height: 1.6; }
+    .notice {
+      padding: 15px; margin: 22px 0; border-radius: 10px;
+      background: #422006; border: 1px solid #854d0e; color: #fde68a;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      padding: 20px; border: 1px solid #29384e;
+      border-radius: 14px; background: #131e30; overflow-wrap: anywhere;
+    }
+    .label { margin-bottom: 10px; color: #9eafc4; font-size: 13px; }
+    .value { font-size: 21px; font-weight: bold; }
+    .small { font-size: 13px; }
+    a { display: inline-block; margin-top: 25px; color: #65e5d0; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="muted">CHAINSCOPE / NETWORK OBSERVABILITY</p>
+    <h1>Transaction &amp; Network Details</h1>
+    <p class="muted">USDT · TRON (TRC20)</p>
+
+    <div class="notice">
+      DEMO VIEW — The fields below are not live blockchain records.
+      A real transaction ID and verified source are required to confirm a payment.
+    </div>
+
+    <section class="grid">
+      <article class="card">
+        <div class="label">Transaction status</div>
+        <div class="value">Not verified</div>
+        <p class="muted small">Requires blockchain explorer verification.</p>
+      </article>
+      <article class="card">
+        <div class="label">Blockchain network</div>
+        <div class="value">TRON</div>
+        <p class="muted small">Token standard: TRC20</p>
+      </article>
+      <article class="card">
+        <div class="label">Web protocol</div>
+        <div class="value">HTTPS</div>
+        <p class="muted small">Website transport protocol, not a transaction status.</p>
+      </article>
+      <article class="card">
+        <div class="label">Transaction value</div>
+        <div class="value">Not provided</div>
+        <p class="muted small">Requires verified transaction data.</p>
+      </article>
+      <article class="card">
+        <div class="label">Transaction count</div>
+        <div class="value">Not available</div>
+        <p class="muted small">Requires a specified address or query.</p>
+      </article>
+      <article class="card">
+        <div class="label">Client IP</div>
+        <div class="value">Not collected</div>
+        <p class="muted small">No address is fabricated for this demo.</p>
+      </article>
+    </section>
+
+    <a href="/transaction-notice.html">← Return to notice</a>
+  </main>
+</body>
+</html>

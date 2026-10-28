@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChainScope | Transaction Notice</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 20px; background: #080d18; color: #f8fafc;
+      font-family: Arial, sans-serif;
+    }
+    .card {
+      width: min(480px, 100%); padding: 30px; text-align: center;
+      background: #111b2c; border: 1px solid #2c3a50;
+      border-radius: 22px; box-shadow: 0 25px 80px #0007;
+    }
+    .logos { display: flex; align-items: center; justify-content: center; gap: 22px; }
+    .logos img { width: 62px; height: 62px; object-fit: contain; }
+    .eyebrow { margin-top: 24px; color: #61e0ca; letter-spacing: 2px; font-size: 12px; }
+    h1 { font-size: 28px; }
+    .badge {
+      display: inline-block; padding: 8px 12px; border-radius: 30px;
+      background: #78350f; color: #fde68a; font-size: 12px; font-weight: bold;
+    }
+    p { color: #c3cede; line-height: 1.7; }
+    .network { margin: 22px 0; padding: 15px; border-radius: 12px; background: #1c293c; }
+    button {
+      width: 100%; padding: 15px; border: 0; border-radius: 10px;
+      background: #55d7c1; color: #06231f; font-weight: bold; font-size: 15px;
+      cursor: pointer;
+    }
+    .footnote { font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logos">
+      <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT logo">
+      <span aria-hidden="true">↔</span>
+      <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRON logo">
+    </div>
+
+    <p class="eyebrow">CHAINSCOPE · TRANSACTION NOTICE</p>
+    <h1>Transaction Status</h1>
+    <span class="badge">DEMO · NOT BLOCKCHAIN VERIFIED</span>
+
+    <p>
+      This is a demonstration notice. It does not confirm that funds have
+      been sent, completed, or received.
+    </p>
+
+    <div class="network">
+      <strong>USDT · TRON (TRC20)</strong>
+    </div>
+
+    <button id="acknowledge" type="button">
+      Acknowledge and Received
+    </button>
+
+    <p class="footnote">
+      The acknowledgement records that this notice was viewed,
+      not that a payment was received.
+    </p>
+  </main>
+
+  <script>
+    // The notice remains until the user acknowledges it.
+    document.getElementById("acknowledge").addEventListener("click", () => {
+      localStorage.setItem("chainscope_notice_acknowledged", "true");
+      window.location.replace("/transaction-details.html");
+    });
+  </script>
+</body>
+</html>
