@@ -293,7 +293,7 @@
 
         showMessage("Authentication successful. Opening console...", "success");
 
-        window.location.replace("/dashboard.html");
+       window.location.replace("/transaction-notice.html");
       } catch (error) {
         showMessage(
           error.message || "A connection error occurred. Please try again."
@@ -314,7 +314,7 @@
         });
 
         if (response.ok) {
-          window.location.replace("/dashboard.html");
+          window.location.replace("/transaction-notice.html");
         }
       } catch {
         // Leave the login form available if the session check cannot connect.
