@@ -275,3 +275,8 @@ h1 span {
     padding: 50px 24px;
   }
 }
+.logos img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
