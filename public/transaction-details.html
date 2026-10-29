@@ -6,6 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1220">
   <title>ChainScope | Transaction & Network Details</title>
+  
+<div class="live-indicator">
+  <span class="live-dot"></span>
+  <span>NETWORK ACTIVITY ·</span>
+</div>
+
+<p>
+  Local time:
+  <time id="live-clock">Loading...</time>
+</p>
+
+<div class="network-activity" aria-label="Decorative network animation">
+  <span></span>
+</div>
+<p class="muted small">
+  live blockchain connection.
+</p>
+
 
   <style>
     
@@ -495,6 +513,305 @@ input:focus-visible {
   }
 }
 
+/* ===== PREMIUM INTERACTIVE UPGRADE ===== */
+
+:root {
+  --glow: rgba(83, 231, 208, 0.22);
+  --accent: #55e6d0;
+  --panel: #111e31;
+  --line: rgba(148, 171, 202, 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Smooth card entrance and hover */
+.card,
+.dark-card,
+.section,
+.amount-panel,
+.table-wrap {
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background 260ms ease;
+  animation: cardEnter 650ms ease both;
+}
+
+.card:hover,
+.dark-card:hover,
+.amount-panel:hover {
+  transform: translateY(-5px);
+  border-color: rgba(85, 230, 208, 0.55);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.22),
+    0 0 22px var(--glow);
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Interactive buttons */
+button,
+.button-link,
+.verify-button,
+.copy-btn {
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+button:hover,
+.button-link:hover,
+.verify-button:hover,
+.copy-btn:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 0 18px var(--glow);
+}
+
+button:active,
+.copy-btn:active {
+  transform: scale(0.97);
+}
+
+/* Clock and decorative activity */
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.network-activity {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(148, 171, 202, 0.12);
+}
+
+.network-activity span {
+  display: block;
+  width: 35%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, #55e6d0, #8c83ff, transparent);
+  animation: networkFlow 3s ease-in-out infinite;
+}
+
+@keyframes networkFlow {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(310%); }
+}
+
+/* Copyable wallet values */
+.copy-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.copy-field code {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.copy-btn {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  color: var(--accent);
+  background: rgba(85, 230, 208, 0.08);
+  border: 1px solid rgba(85, 230, 208, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Expandable technical sections */
+.interactive-panel {
+  margin: 16px 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(17, 30, 49, 0.78);
+}
+
+.interactive-panel > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 19px 22px;
+  cursor: pointer;
+  font-weight: 750;
+  list-style: none;
+}
+
+.interactive-panel > summary::-webkit-details-marker {
+  display: none;
+}
+
+.interactive-panel > summary::after {
+  content: "+";
+  color: var(--accent);
+  font-size: 23px;
+}
+
+.interactive-panel[open] > summary::after {
+  content: "−";
+}
+
+.panel-content {
+  padding: 0 22px 22px;
+  animation: cardEnter 220ms ease;
+}
+
+/* Toast notification */
+#ui-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 99999;
+  max-width: min(380px, calc(100vw - 32px));
+  padding: 15px 19px;
+  color: #effffb;
+  background: #132c36;
+  border: 1px solid rgba(85, 230, 208, 0.55);
+  border-radius: 14px;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+#ui-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Verification form */
+#txid-input:focus {
+  outline: 2px solid rgba(85, 230, 208, 0.65);
+  outline-offset: 2px;
+}
+
+/* Tablet and mobile layout */
+@media (max-width: 900px) {
+  .grid,
+  .two-column,
+  .wallet-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  main {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  h1 {
+    font-size: clamp(29px, 8vw, 42px);
+    line-height: 1.12;
+  }
+
+  .grid,
+  .two-column,
+  .wallet-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card,
+  .dark-card,
+  .section,
+  .amount-panel {
+    padding: 18px;
+  }
+
+  .copy-field {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+
+  .verify-form {
+    flex-direction: column;
+  }
+
+  .verify-form input,
+  .verify-form button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .interactive-panel > summary {
+    padding: 16px;
+  }
+
+  .panel-content {
+    padding: 0 16px 16px;
+  }
+
+  #ui-toast {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+/* Respect accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
   </style>
 </head>
 
@@ -548,19 +865,18 @@ input:focus-visible {
   <section class="section card">
     <p class="eyebrow">WALLET DATA</p>
     <div class="wallet-grid">
-      <div>
-        <div class="label">SENDER · SERVER WALLET</div>
-        <div class="wallet-address">TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</div>
-      </div>
-
+      <div class="copy-field">
+  <code id="sender-wallet">TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</code>
+  <button class="copy-btn" data-copy="sender-wallet"
+          type="button">Copy</button>
+</div>
       <div class="arrow" aria-hidden="true">→</div>
 
-      <div>
-        <div class="label">DESTINATION · TRUST WALLET</div>
-        <div class="wallet-address">TTTHnNEBykkco6fPA7e9w4kP3FjURe9Hn</div>
-      </div>
-    </div>
-
+      <div class="copy-field">
+  <code id="receiver-wallet">TTTHnNEBykkco6fPA7e9w4kP3FjURe9Hn</code>
+  <button class="copy-btn" data-copy="receiver-wallet"
+          type="button">Copy</button>
+</div>
     <div class="amount-panel">
       <div>
         <div class="label">TRANSFER AMOUNT</div>
@@ -599,6 +915,9 @@ input:focus-visible {
   </section>
 
   <section class="section">
+    <details class="interactive-panel">
+  <summary>Database Runtime & Telemetry</summary>
+  <div class="panel-content">
     <p class="eyebrow">INFRASTRUCTURE ·</p>
     <h2>Database runtime</h2>
     <p class="muted small">These are values from the dashboard, live telemetry.</p>
@@ -632,7 +951,11 @@ input:focus-visible {
       </div>
     </div>
   </section>
-
+  </div>
+</details>
+<details class="interactive-panel">
+  <summary>Resource Telemetry & Health Checks</summary>
+  <div class="panel-content">
   <section class="section two-column">
     <article class="dark-card">
       <div class="card-heading">resource telemetry</div>
@@ -672,7 +995,11 @@ input:focus-visible {
       </div>
     </article>
   </section>
-
+    </div>
+</details>
+<details class="interactive-panel">
+  <summary>Confirmation Progress & Transaction Activity</summary>
+  <div class="panel-content">
   <section class="section two-column">
     <article class="card">
       <div class="topline">
@@ -723,7 +1050,8 @@ input:focus-visible {
       </div>
     </article>
   </section>
-
+  </div>
+</details>
   <section class="section card">
     <div class="topline">
       <h2>Transaction details</h2>
@@ -777,6 +1105,86 @@ input:focus-visible {
     const url = "https://tronscan.org/#/transaction/" + encodeURIComponent(txid);
     window.open(url, "_blank", "noopener,noreferrer");
   });
+
+
+/* ===== INTERACTIVE DASHBOARD CONTROLS ===== */
+
+let toastTimeout;
+
+function showToast(message) {
+  const toast = document.getElementById("ui-toast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("visible");
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 2600);
+}
+
+/* Live local clock — not a transaction timestamp */
+function updateClock() {
+  const clock = document.getElementById("live-clock");
+  if (!clock) return;
+
+  clock.textContent = new Intl.DateTimeFormat(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  }).format(new Date());
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+/* Copy wallet addresses */
+document.querySelectorAll("[data-copy]").forEach(button => {
+  button.addEventListener("click", async () => {
+    const target = document.getElementById(button.dataset.copy);
+    const value = target?.textContent.trim();
+
+    if (!value || value.startsWith("YOUR_EXISTING_")) {
+      showToast("Add the wallet address first.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(value);
+      showToast("Wallet address copied.");
+    } catch {
+      showToast("Copy unavailable. Select and copy the address manually.");
+    }
+  });
+});
+
+/* Open the real TRONSCAN transaction page */
+const explorerButton = document.getElementById("open-explorer");
+
+if (explorerButton) {
+  explorerButton.addEventListener("click", () => {
+    const input = document.getElementById("txid-input");
+    const txid = input?.value.trim();
+
+    // TRON transaction IDs are 64 hexadecimal characters.
+    if (!txid || !/^[a-fA-F0-9]{64}$/.test(txid)) {
+      showToast("Enter a valid 64-character transaction hash.");
+      input?.focus();
+      return;
+    }
+
+    const url =
+      "https://tronscan.org/#/transaction/" +
+      encodeURIComponent(txid);
+
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+}
+
 </script>
+
+<div id="ui-toast" role="status" aria-live="polite"></div>
+
 </body>
 </html>
