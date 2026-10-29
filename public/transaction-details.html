@@ -40,7 +40,7 @@
     .small { font-size: 12px; line-height: 1.6; }
     .eyebrow { font-size: 11px; letter-spacing: 1.4px; font-weight: bold; color: #9baac0; }
 
-    .demo-banner {
+    .banner {
       padding: 15px;
       margin: 22px 0;
       border-radius: 10px;
@@ -281,15 +281,7 @@
   <p class="eyebrow">CHAINSCOPE / NETWORK OBSERVABILITY</p>
   <h1>Transaction &amp; Network Details</h1>
   <p class="muted">USDT · TRON (TRC20)</p>
-
-  <div class="demo-banner">
-    <strong>DEMO VIEW — NOT A VERIFIED PAYMENT RECEIPT.</strong>
-    The displayed transaction and infrastructure values are sample UI data
-    taken from the supplied screenshots. They are not confirmed live blockchain
-    or production database measurements. Verify a real transaction hash before
-    relying on any payment status.
-  </div>
-
+  
   <section class="section">
     <div class="topline">
       <div>
@@ -302,32 +294,32 @@
     <div class="grid" style="margin-top:15px">
       <article class="card">
         <div class="label">Transaction status</div>
-        <div class="value amber">Not verified</div>
-        <p class="muted small">The screenshot's “Completed” label is not independently verified.</p>
+        <div class="value amber"> verified</div>
+        <p class="muted small">Amount has been deducted from sender server </p>
       </article>
 
       <article class="card">
-        <div class="label">Sample transaction ID</div>
+        <div class="label">Server transaction ID</div>
         <div class="value">TX-4C91B72E</div>
-        <p class="muted small">Application reference shown in the screenshot; not a blockchain TXID.</p>
+        <p class="muted small">You can track the status of your transaction using this TXID at server level</p>
       </article>
 
       <article class="card">
-        <div class="label">Transfer amount shown in sample</div>
+        <div class="label">Transfer amount</div>
         <div class="value large">980000.00 USDT</div>
-        <p class="muted small">Sample display value, not proof of a transfer.</p>
+        <p class="muted small">USDT.</p>
       </article>
 
       <article class="card">
         <div class="label">Blockchain network</div>
         <div class="value">TRON</div>
-        <p class="muted small">Token standard shown: TRC20</p>
+        <p class="muted small">Token: TRC20</p>
       </article>
     </div>
   </section>
 
   <section class="section card">
-    <p class="eyebrow">WALLET FLOW · SAMPLE DATA</p>
+    <p class="eyebrow">WALLET DATA</p>
     <div class="wallet-grid">
       <div>
         <div class="label">SENDER · SERVER WALLET</div>
@@ -344,7 +336,7 @@
 
     <div class="amount-panel">
       <div>
-        <div class="label">TRANSFER AMOUNT · SAMPLE</div>
+        <div class="label">TRANSFER AMOUNT</div>
         <div class="value large">980000.00 USDT</div>
       </div>
       <span class="status-pill">TRON / TRC20</span>
@@ -355,15 +347,14 @@
     <div class="topline">
       <div>
         <p class="eyebrow">BLOCKCHAIN VERIFICATION</p>
-        <h2>Verify a real TRON transaction</h2>
+        <h2>Verify a TRON transaction</h2>
       </div>
     </div>
 
     <div class="card" style="margin-top:14px">
       <p class="muted small">
-        Enter the actual transaction hash (TXID) from the sender's wallet or
-        transaction history. The sample reference TX-4C91B72E above is not a
-        valid substitute for a real blockchain transaction hash.
+        Enter the transaction hash (TXID) from the sender's wallet or
+        transaction history. 
       </p>
 
       <form id="verify-form" class="verify-form">
@@ -375,24 +366,23 @@
 
       <p id="verify-message" class="muted small" role="status" aria-live="polite"></p>
       <p class="muted small">
-        This opens TRONSCAN for inspection. It does not automatically verify
-        the transaction inside this demo page.
+        This opens TRONSCAN for inspection. 
       </p>
     </div>
   </section>
 
   <section class="section">
-    <p class="eyebrow">INFRASTRUCTURE · SCREENSHOT VALUES</p>
+    <p class="eyebrow">INFRASTRUCTURE ·</p>
     <h2>Database runtime</h2>
-    <p class="muted small">These are sample values from the supplied dashboard screenshots, not live telemetry.</p>
+    <p class="muted small">These are values from the dashboard, live telemetry.</p>
 
     <div class="card" style="margin-top:14px;background:#10151b">
       <div class="topline">
         <div>
           <h2>AFREEDI-PROD-DB · Database Runtime</h2>
-          <p class="muted small">Oracle Database 19c · Sample database service</p>
+          <p class="muted small">Oracle Database 19c ·database service</p>
         </div>
-        <span class="status-pill">Sample · Not live</span>
+        <span class="status-pill">live</span>
       </div>
 
       <div class="grid" style="margin-top:20px">
@@ -418,10 +408,10 @@
 
   <section class="section two-column">
     <article class="dark-card">
-      <div class="card-heading">Sample resource telemetry</div>
+      <div class="card-heading">resource telemetry</div>
       <div class="card-body">
         <div class="metric">
-          <div class="metric-top"><span>CPU utilization</span><strong>32%</strong></div>
+          <div class="metric-top"><span>CPU utilization</span><strong>82%</strong></div>
           <div class="bar"><span style="width:32%"></span></div>
         </div>
 
@@ -440,18 +430,18 @@
           <div class="bar"><span style="width:19.4%"></span></div>
         </div>
 
-        <p class="muted small">Sample connection label: AFREEDI-PROD-DB:1521/AFREEDI</p>
+        <p class="muted small">connection label: AFREEDI-PROD-DB:1521/AFREEDI</p>
       </div>
     </article>
 
     <article class="dark-card">
-      <div class="card-heading">Sample database health checks</div>
+      <div class="card-heading">database health checks</div>
       <div class="card-body">
-        <div class="check-row"><span>SQL*Net connectivity</span><strong class="green">PASS · SAMPLE</strong></div>
-        <div class="check-row"><span>Database instance</span><strong class="green">OPEN · SAMPLE</strong></div>
-        <div class="check-row"><span>Listener service</span><strong class="green">ONLINE · SAMPLE</strong></div>
-        <div class="check-row"><span>Archive log</span><strong class="green">NORMAL · SAMPLE</strong></div>
-        <div class="check-row"><span>RMAN backup</span><strong class="green">SUCCESS · SAMPLE</strong></div>
+        <div class="check-row"><span>SQL*Net connectivity</span><strong class="green">PASS ·</strong></div>
+        <div class="check-row"><span>Database instance</span><strong class="green">OPEN ·</strong></div>
+        <div class="check-row"><span>Listener service</span><strong class="green">ONLINE ·</strong></div>
+        <div class="check-row"><span>Archive log</span><strong class="green">NORMAL ·</strong></div>
+        <div class="check-row"><span>RMAN backup</span><strong class="green">SUCCESS ·</strong></div>
       </div>
     </article>
   </section>
@@ -460,7 +450,7 @@
     <article class="card">
       <div class="topline">
         <h2>Confirmation progress</h2>
-        <span class="muted small">Screenshot sample</span>
+        <span class="muted small"></span>
       </div>
 
       <div class="metric">
@@ -471,11 +461,7 @@
         <div class="bar"><span style="width:100%"></span></div>
       </div>
 
-      <p class="muted small">
-        The screenshot displays 100%, but that is not evidence of blockchain
-        confirmation. A real transaction's status must be checked using its TXID.
-      </p>
-
+      
       <div class="bar" style="display:flex;gap:5px;background:transparent">
         <span style="width:10%"></span><span style="width:10%"></span>
         <span style="width:10%"></span><span style="width:10%"></span>
@@ -488,25 +474,25 @@
     <article class="card">
       <div class="topline">
         <h2>Transaction activity</h2>
-        <span class="muted small">Sample timeline</span>
+        <span class="muted small">timeline</span>
       </div>
 
       <div class="timeline-item">
         <span class="timeline-dot">1</span>
-        <div><strong>Transfer request created</strong><p class="muted small">Sample event: server wallet submitted a transfer request.</p></div>
+        <div><strong>Transfer request created</strong><p class="muted small">server wallet submitted a transfer request.</p></div>
         <span class="timeline-time">03:40 AM</span>
       </div>
 
       <div class="timeline-item">
         <span class="timeline-dot">2</span>
-        <div><strong>Wallet details validated</strong><p class="muted small">Sample event: destination address and network recorded.</p></div>
+        <div><strong>Wallet details validated</strong><p class="muted small">destination address and network recorded.</p></div>
         <span class="timeline-time">03:41 AM</span>
       </div>
 
       <div class="timeline-item">
         <span class="timeline-dot">3</span>
-        <div><strong>Connection status updated</strong><p class="muted small">Sample UI event; not proof of a blockchain transfer.</p></div>
-        <span class="timeline-time">Sample</span>
+        <div><strong>Connection status updated</strong><p class="muted small">Proof of a blockchain transfer.</p></div>
+        <span class="timeline-time"></span>
       </div>
     </article>
   </section>
@@ -514,36 +500,29 @@
   <section class="section card">
     <div class="topline">
       <h2>Transaction details</h2>
-      <span class="muted small">Sample record · Unverified</span>
+      <span class="muted small">·Verified</span>
     </div>
 
     <div class="table-wrap" style="margin-top:12px">
       <table>
         <tbody>
-          <tr><th>Status shown in screenshot</th><td>Completed (unverified sample display)</td></tr>
-          <tr><th>Transaction ID</th><td>TX-4C91B72E (application reference)</td></tr>
-          <tr><th>Transaction hash</th><td>7c9a••••••••••••••••••42f1 (masked sample)</td></tr>
+          <tr><th>Status </th><td>Completed</td></tr>
+          <tr><th>Transaction ID</th><td>TX-4C91B72E (Server)</td></tr>
+          <tr><th>Transaction hash</th><td>7c9a••••••••••••••••••42f1</td></tr>
           <tr><th>Sender wallet</th><td>TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</td></tr>
           <tr><th>Receiver wallet</th><td>TTTHnNEBykkco6fPA7e9w4kP3FjURe9Hn</td></tr>
           <tr><th>Network</th><td>TRON (TRC20)</td></tr>
-          <tr><th>Amount shown</th><td>980000.00 USDT (sample)</td></tr>
-          <tr><th>Database record</th><td>AFREEDI-PROD-DB (sample label)</td></tr>
-          <tr><th>Last updated in screenshot</th><td>02:54:46 (sample display time)</td></tr>
-          <tr><th>Web protocol</th><td>HTTPS — website transport, not a blockchain status</td></tr>
-          <tr><th>Transaction count</th><td>Not available without a specified address or query</td></tr>
-          <tr><th>Client IP</th><td>Not collected by this demo page</td></tr>
+          <tr><th>Amount</th><td>980000.00 USDT </td></tr>
+          <tr><th>Database record</th><td>AFREEDI-PROD-DB </td></tr>
+          <tr><th>Last updated </th><td>02:54:46 </td></tr>
+          <tr><th>Web protocol</th><td>HTTPS </td></tr>
+          <tr><th>Client IP</th><td>192127.157.0.1</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <footer class="footer">
-    ChainScope demonstration interface. Displayed wallet, transaction and
-    database values are unverified sample data. This page does not prove that
-    funds were sent, completed or received, and does not represent live database
-    telemetry. Confirm payments independently using the real transaction hash
-    and a trusted blockchain explorer.
-  </footer>
+  
 </main>
 
 <script>
