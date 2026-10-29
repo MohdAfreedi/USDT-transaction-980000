@@ -4,79 +4,573 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ChainScope | Network Details</title>
+  <meta name="theme-color" content="#0b1220">
+  <title>ChainScope | Transaction & Network Details</title>
+
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0; padding: 28px; background: #0b1220;
-      color: #f1f5f9; font-family: Arial, sans-serif;
+
+    :root {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --panel: #131e30;
+      --panel-dark: #10151b;
+      --border: #29384e;
+      --muted: #aab7c8;
+      --green: #18c993;
+      --teal: #65e5d0;
+      --amber: #f5b323;
     }
-    main { max-width: 1050px; margin: auto; }
-    .muted { color: #aab7c8; line-height: 1.6; }
-    .notice {
-      padding: 15px; margin: 22px 0; border-radius: 10px;
-      background: #422006; border: 1px solid #854d0e; color: #fde68a;
+
+    body {
+      margin: 0;
+      padding: 28px;
+      background: var(--bg);
+      color: #f1f5f9;
+      font-family: Arial, sans-serif;
+    }
+
+    main { max-width: 1200px; margin: auto; }
+
+    h1 { font-size: clamp(27px, 4vw, 36px); margin: 10px 0; }
+    h2 { font-size: 19px; margin: 0; }
+    h3 { font-size: 15px; margin: 0 0 12px; }
+
+    .muted { color: var(--muted); line-height: 1.6; }
+    .small { font-size: 12px; line-height: 1.6; }
+    .eyebrow { font-size: 11px; letter-spacing: 1.4px; font-weight: bold; color: #9baac0; }
+
+    .demo-banner {
+      padding: 15px;
+      margin: 22px 0;
+      border-radius: 10px;
+      background: #422006;
+      border: 1px solid #854d0e;
+      color: #fde68a;
       line-height: 1.6;
     }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button-link, .verify-button {
+      display: inline-block;
+      padding: 11px 15px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #151d2b;
+      color: var(--teal);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #8b6421;
+      border-radius: 20px;
+      color: #fcd875;
+      background: #35280e;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .rule { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+
+    .section { margin-top: 22px; }
+
     .grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+      min-width: 0;
+    }
+
+    .label { color: #9eafc4; font-size: 12px; margin-bottom: 9px; }
+    .value { font-size: 20px; font-weight: bold; overflow-wrap: anywhere; }
+    .value.large { font-size: clamp(25px, 4vw, 36px); }
+    .green { color: var(--green); }
+    .amber { color: var(--amber); }
+
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
       gap: 16px;
     }
-    .card {
-      padding: 20px; border: 1px solid #29384e;
-      border-radius: 14px; background: #131e30; overflow-wrap: anywhere;
+
+    .wallet-address {
+      background: #090e15;
+      border: 1px solid #29313b;
+      padding: 13px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.7;
     }
-    .label { margin-bottom: 10px; color: #9eafc4; font-size: 13px; }
-    .value { font-size: 21px; font-weight: bold; }
-    .small { font-size: 13px; }
-    a { display: inline-block; margin-top: 25px; color: #65e5d0; }
+
+    .arrow { font-size: 27px; text-align: center; color: var(--muted); }
+
+    .amount-panel {
+      margin-top: 15px;
+      padding: 22px;
+      border-radius: 14px;
+      border: 1px solid #29313b;
+      background: var(--panel-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .dark-card {
+      border: 1px solid #29313b;
+      border-radius: 13px;
+      overflow: hidden;
+      background: var(--panel-dark);
+    }
+
+    .card-heading {
+      padding: 16px;
+      border-bottom: 1px solid #29313b;
+      font-weight: bold;
+    }
+
+    .card-body { padding: 17px; }
+
+    .metric { margin: 17px 0; }
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .bar {
+      height: 7px;
+      background: #2a313b;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: var(--green);
+      border-radius: inherit;
+    }
+
+    .check-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid #29313b;
+      font-size: 12px;
+    }
+
+    .check-row:last-child { border-bottom: 0; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 25px 1fr auto;
+      gap: 11px;
+      padding: 13px 0;
+      border-bottom: 1px solid #29313b;
+      align-items: start;
+    }
+
+    .timeline-item:last-child { border-bottom: 0; }
+
+    .timeline-dot {
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid #64748b;
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+
+    .timeline-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    .table-wrap { overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      text-align: left;
+      padding: 13px 12px;
+      border-bottom: 1px solid #29384e;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th { color: #9eafc4; font-weight: normal; width: 34%; }
+    td { overflow-wrap: anywhere; }
+    tr:last-child th, tr:last-child td { border-bottom: 0; }
+
+    .verify-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    input {
+      min-width: 0;
+      flex: 1;
+      padding: 12px;
+      background: #080e18;
+      color: white;
+      border: 1px solid #3a4960;
+      border-radius: 8px;
+    }
+
+    .verify-button { background: #eeb02b; color: #17130a; border: 0; }
+    #verify-message { overflow-wrap: anywhere; }
+
+    .footer {
+      margin: 30px 0 10px;
+      padding-top: 17px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 16px; }
+      .two-column { grid-template-columns: 1fr; }
+      .wallet-grid { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      .verify-form { flex-direction: column; }
+      th { width: 38%; }
+    }
   </style>
 </head>
-<body>
-  <main>
-    <p class="muted">CHAINSCOPE / NETWORK OBSERVABILITY</p>
-    <h1>Transaction &amp; Network Details</h1>
-    <p class="muted">USDT · TRON (TRC20)</p>
 
-    <div class="notice">
-      DEMO VIEW — The fields below are not live blockchain records.
-      A real transaction ID and verified source are required to confirm a payment.
+<body>
+<main>
+  <div class="topline">
+    <a class="button-link" href="/transaction-notice.html">← Return to notice</a>
+    <span class="status-pill">DEMO · UNVERIFIED</span>
+  </div>
+
+  <p class="eyebrow">CHAINSCOPE / NETWORK OBSERVABILITY</p>
+  <h1>Transaction &amp; Network Details</h1>
+  <p class="muted">USDT · TRON (TRC20)</p>
+
+  <div class="demo-banner">
+    <strong>DEMO VIEW — NOT A VERIFIED PAYMENT RECEIPT.</strong>
+    The displayed transaction and infrastructure values are sample UI data
+    taken from the supplied screenshots. They are not confirmed live blockchain
+    or production database measurements. Verify a real transaction hash before
+    relying on any payment status.
+  </div>
+
+  <section class="section">
+    <div class="topline">
+      <div>
+        <p class="eyebrow">TRANSFER SUMMARY</p>
+        <h2>USDT transfer overview</h2>
+      </div>
+      <span class="status-pill">Sample status · Unverified</span>
     </div>
 
-    <section class="grid">
+    <div class="grid" style="margin-top:15px">
       <article class="card">
         <div class="label">Transaction status</div>
-        <div class="value">Not verified</div>
-        <p class="muted small">Requires blockchain explorer verification.</p>
+        <div class="value amber">Not verified</div>
+        <p class="muted small">The screenshot's “Completed” label is not independently verified.</p>
       </article>
+
+      <article class="card">
+        <div class="label">Sample transaction ID</div>
+        <div class="value">TX-4C91B72E</div>
+        <p class="muted small">Application reference shown in the screenshot; not a blockchain TXID.</p>
+      </article>
+
+      <article class="card">
+        <div class="label">Transfer amount shown in sample</div>
+        <div class="value large">980000.00 USDT</div>
+        <p class="muted small">Sample display value, not proof of a transfer.</p>
+      </article>
+
       <article class="card">
         <div class="label">Blockchain network</div>
         <div class="value">TRON</div>
-        <p class="muted small">Token standard: TRC20</p>
+        <p class="muted small">Token standard shown: TRC20</p>
       </article>
-      <article class="card">
-        <div class="label">Web protocol</div>
-        <div class="value">HTTPS</div>
-        <p class="muted small">Website transport protocol, not a transaction status.</p>
-      </article>
-      <article class="card">
-        <div class="label">Transaction value</div>
-        <div class="value">Not provided</div>
-        <p class="muted small">Requires verified transaction data.</p>
-      </article>
-      <article class="card">
-        <div class="label">Transaction count</div>
-        <div class="value">Not available</div>
-        <p class="muted small">Requires a specified address or query.</p>
-      </article>
-      <article class="card">
-        <div class="label">Client IP</div>
-        <div class="value">Not collected</div>
-        <p class="muted small">No address is fabricated for this demo.</p>
-      </article>
-    </section>
+    </div>
+  </section>
 
-    <a href="/transaction-notice.html">← Return to notice</a>
-  </main>
+  <section class="section card">
+    <p class="eyebrow">WALLET FLOW · SAMPLE DATA</p>
+    <div class="wallet-grid">
+      <div>
+        <div class="label">SENDER · SERVER WALLET</div>
+        <div class="wallet-address">TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</div>
+      </div>
+
+      <div class="arrow" aria-hidden="true">→</div>
+
+      <div>
+        <div class="label">DESTINATION · TRUST WALLET</div>
+        <div class="wallet-address">TTTHnNEBykkco6fPA7e9w4kP3FjURe9Hn</div>
+      </div>
+    </div>
+
+    <div class="amount-panel">
+      <div>
+        <div class="label">TRANSFER AMOUNT · SAMPLE</div>
+        <div class="value large">980000.00 USDT</div>
+      </div>
+      <span class="status-pill">TRON / TRC20</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="topline">
+      <div>
+        <p class="eyebrow">BLOCKCHAIN VERIFICATION</p>
+        <h2>Verify a real TRON transaction</h2>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <p class="muted small">
+        Enter the actual transaction hash (TXID) from the sender's wallet or
+        transaction history. The sample reference TX-4C91B72E above is not a
+        valid substitute for a real blockchain transaction hash.
+      </p>
+
+      <form id="verify-form" class="verify-form">
+        <input id="txid" type="text" maxlength="128"
+          placeholder="Paste real TRON transaction hash (TXID)"
+          autocomplete="off" spellcheck="false" required>
+        <button class="verify-button" type="submit">Open explorer</button>
+      </form>
+
+      <p id="verify-message" class="muted small" role="status" aria-live="polite"></p>
+      <p class="muted small">
+        This opens TRONSCAN for inspection. It does not automatically verify
+        the transaction inside this demo page.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">INFRASTRUCTURE · SCREENSHOT VALUES</p>
+    <h2>Database runtime</h2>
+    <p class="muted small">These are sample values from the supplied dashboard screenshots, not live telemetry.</p>
+
+    <div class="card" style="margin-top:14px;background:#10151b">
+      <div class="topline">
+        <div>
+          <h2>AFREEDI-PROD-DB · Database Runtime</h2>
+          <p class="muted small">Oracle Database 19c · Sample database service</p>
+        </div>
+        <span class="status-pill">Sample · Not live</span>
+      </div>
+
+      <div class="grid" style="margin-top:20px">
+        <article class="card">
+          <div class="label">Instance</div>
+          <div class="value">AFREEDI1</div>
+        </article>
+        <article class="card">
+          <div class="label">Open mode</div>
+          <div class="value green">READ WRITE</div>
+        </article>
+        <article class="card">
+          <div class="label">Listener</div>
+          <div class="value green">ONLINE :1521</div>
+        </article>
+        <article class="card">
+          <div class="label">Database role</div>
+          <div class="value">PRIMARY</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section two-column">
+    <article class="dark-card">
+      <div class="card-heading">Sample resource telemetry</div>
+      <div class="card-body">
+        <div class="metric">
+          <div class="metric-top"><span>CPU utilization</span><strong>32%</strong></div>
+          <div class="bar"><span style="width:32%"></span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top"><span>Memory usage</span><strong>68%</strong></div>
+          <div class="bar"><span style="width:68%"></span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top"><span>Storage usage</span><strong>7.1 / 10 TB</strong></div>
+          <div class="bar"><span style="width:71%"></span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top"><span>Active sessions</span><strong>194 / 1000</strong></div>
+          <div class="bar"><span style="width:19.4%"></span></div>
+        </div>
+
+        <p class="muted small">Sample connection label: AFREEDI-PROD-DB:1521/AFREEDI</p>
+      </div>
+    </article>
+
+    <article class="dark-card">
+      <div class="card-heading">Sample database health checks</div>
+      <div class="card-body">
+        <div class="check-row"><span>SQL*Net connectivity</span><strong class="green">PASS · SAMPLE</strong></div>
+        <div class="check-row"><span>Database instance</span><strong class="green">OPEN · SAMPLE</strong></div>
+        <div class="check-row"><span>Listener service</span><strong class="green">ONLINE · SAMPLE</strong></div>
+        <div class="check-row"><span>Archive log</span><strong class="green">NORMAL · SAMPLE</strong></div>
+        <div class="check-row"><span>RMAN backup</span><strong class="green">SUCCESS · SAMPLE</strong></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="section two-column">
+    <article class="card">
+      <div class="topline">
+        <h2>Confirmation progress</h2>
+        <span class="muted small">Screenshot sample</span>
+      </div>
+
+      <div class="metric">
+        <div class="metric-top">
+          <span>Network confirmation shown</span>
+          <strong class="green">100%</strong>
+        </div>
+        <div class="bar"><span style="width:100%"></span></div>
+      </div>
+
+      <p class="muted small">
+        The screenshot displays 100%, but that is not evidence of blockchain
+        confirmation. A real transaction's status must be checked using its TXID.
+      </p>
+
+      <div class="bar" style="display:flex;gap:5px;background:transparent">
+        <span style="width:10%"></span><span style="width:10%"></span>
+        <span style="width:10%"></span><span style="width:10%"></span>
+        <span style="width:10%"></span><span style="width:10%"></span>
+        <span style="width:10%"></span><span style="width:10%"></span>
+        <span style="width:10%"></span><span style="width:10%;background:#64748b"></span>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="topline">
+        <h2>Transaction activity</h2>
+        <span class="muted small">Sample timeline</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-dot">1</span>
+        <div><strong>Transfer request created</strong><p class="muted small">Sample event: server wallet submitted a transfer request.</p></div>
+        <span class="timeline-time">03:40 AM</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-dot">2</span>
+        <div><strong>Wallet details validated</strong><p class="muted small">Sample event: destination address and network recorded.</p></div>
+        <span class="timeline-time">03:41 AM</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-dot">3</span>
+        <div><strong>Connection status updated</strong><p class="muted small">Sample UI event; not proof of a blockchain transfer.</p></div>
+        <span class="timeline-time">Sample</span>
+      </div>
+    </article>
+  </section>
+
+  <section class="section card">
+    <div class="topline">
+      <h2>Transaction details</h2>
+      <span class="muted small">Sample record · Unverified</span>
+    </div>
+
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <tbody>
+          <tr><th>Status shown in screenshot</th><td>Completed (unverified sample display)</td></tr>
+          <tr><th>Transaction ID</th><td>TX-4C91B72E (application reference)</td></tr>
+          <tr><th>Transaction hash</th><td>7c9a••••••••••••••••••42f1 (masked sample)</td></tr>
+          <tr><th>Sender wallet</th><td>TNXoiAJ3dct8Fjg4m9fklfh9S2v9TXc32G</td></tr>
+          <tr><th>Receiver wallet</th><td>TTTHnNEBykkco6fPA7e9w4kP3FjURe9Hn</td></tr>
+          <tr><th>Network</th><td>TRON (TRC20)</td></tr>
+          <tr><th>Amount shown</th><td>980000.00 USDT (sample)</td></tr>
+          <tr><th>Database record</th><td>AFREEDI-PROD-DB (sample label)</td></tr>
+          <tr><th>Last updated in screenshot</th><td>02:54:46 (sample display time)</td></tr>
+          <tr><th>Web protocol</th><td>HTTPS — website transport, not a blockchain status</td></tr>
+          <tr><th>Transaction count</th><td>Not available without a specified address or query</td></tr>
+          <tr><th>Client IP</th><td>Not collected by this demo page</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    ChainScope demonstration interface. Displayed wallet, transaction and
+    database values are unverified sample data. This page does not prove that
+    funds were sent, completed or received, and does not represent live database
+    telemetry. Confirm payments independently using the real transaction hash
+    and a trusted blockchain explorer.
+  </footer>
+</main>
+
+<script>
+  "use strict";
+
+  const form = document.getElementById("verify-form");
+  const txidInput = document.getElementById("txid");
+  const verifyMessage = document.getElementById("verify-message");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const txid = txidInput.value.trim();
+
+    // TRON transaction IDs are 64 hexadecimal characters.
+    if (!/^[a-fA-F0-9]{64}$/.test(txid)) {
+      verifyMessage.textContent =
+        "Enter a valid 64-character hexadecimal transaction hash (TXID).";
+      return;
+    }
+
+    verifyMessage.textContent =
+      "Opening TRONSCAN. Review the transaction status, token transfer, amount and recipient there.";
+
+    const url = "https://tronscan.org/#/transaction/" + encodeURIComponent(txid);
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+</script>
 </body>
 </html>
