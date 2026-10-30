@@ -26,6 +26,31 @@
 
 
   <style>
+    .receiving-window-note {
+    display: block;
+    width: 100%;
+    margin: 14px 0 20px;
+    padding: 16px 18px;
+    background: rgba(22, 163, 74, 0.12);
+    border: 1px solid #16a34a;
+    border-radius: 10px;
+    color: #86efac;
+}
+
+.receiving-window-note strong {
+    display: block;
+    color: #4ade80;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.receiving-window-note p {
+    margin: 0;
+    color: #bbf7d0;
+    font-weight: 600;
+    line-height: 1.6;
+}
     .sender-pending-alert {
     display: block;
     width: 100%;
@@ -1116,13 +1141,16 @@ button:active,
 
     <span>
         Response deadline: 24 hours from notice issuance.
-        </span>
-    "The expected receiving time ranges from 72 hours to 3 weeks, depending on the global transaction processing requirements.
-    <span>
-
     </span>
 </div>
-<span class="muted small">·Verified</span>
+
+<div class="receiving-window-note">
+    <strong>Estimated receiving window</strong>
+    <p>
+        The expected receiving time ranges from 72 hours to
+        3 weeks, depending on applicable processing requirements.
+    </p>
+</div><span class="muted small">·Verified</span>
     </div>
 
     <div class="table-wrap" style="margin-top:12px">
