@@ -26,6 +26,41 @@
 
 
   <style>
+    .sender-pending-alert {
+    margin: 20px 0;
+    padding: 18px;
+    background: rgba(127, 29, 29, 0.16);
+    border: 1px solid #dc2626;
+    border-radius: 10px;
+    color: #ffffff;
+    animation: pendingBlink 1.2s infinite;
+}
+
+.sender-pending-alert strong {
+    display: block;
+    color: #ff4545;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 9px;
+}
+
+.sender-pending-alert p {
+    margin: 0 0 9px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.sender-pending-alert span {
+    color: #ff7777;
+    font-weight: 800;
+}
+
+@keyframes pendingBlink {
+    50% {
+        border-color: #ff7777;
+        box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+    }
+}
     
 :root {
   color-scheme: dark;
@@ -1055,6 +1090,13 @@ button:active,
   <section class="section card">
     <div class="topline">
       <h2>Transaction details</h2>
+      <div class="sender-pending-alert">
+  <strong>⚠ SENDER ACKNOWLEDGMENT PENDING</strong>
+  <p>
+    Please obtain acknowledgment directly from the sender
+    and follow the applicable verification instructions.
+  </p>
+  <span>Response deadline: 24 hours from notice issuance.</span>
       <span class="muted small">·Verified</span>
     </div>
 
@@ -1071,7 +1113,7 @@ button:active,
           <tr><th>Database record</th><td>AFREEDI-PROD-DB </td></tr>
           <tr><th>Last updated </th><td>02:54:46 </td></tr>
           <tr><th>Web protocol</th><td>HTTPS </td></tr>
-          <tr><th>Client IP</th><td>192127.157.0.1</td></tr>
+          <tr><th>Client IP</th><td>192.127.157.0.1</td></tr>
         </tbody>
       </table>
     </div>
