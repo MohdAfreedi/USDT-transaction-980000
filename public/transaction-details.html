@@ -27,6 +27,21 @@
 
   <style>
     .sender-pending-alert {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.table-wrap {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table-wrap table {
+    width: 100%;
+}
+    .sender-pending-alert {
     margin: 20px 0;
     padding: 18px;
     background: rgba(127, 29, 29, 0.16);
@@ -1087,17 +1102,23 @@ button:active,
   </section>
   </div>
 </details>
-  <section class="section card">
-    <div class="topline">
-      <h2>Transaction details</h2>
-      <div class="sender-pending-alert">
-  <strong>⚠ SENDER ACKNOWLEDGMENT PENDING</strong>
-  <p>
-    Please obtain acknowledgment directly from the sender
-    and follow the applicable verification instructions.
-  </p>
-  <span>Response deadline: 24 hours from notice issuance.</span>
-      <span class="muted small">·Verified</span>
+  <div class="topline">
+    <h2>Transaction details</h2>
+</div>
+
+<div class="sender-pending-alert">
+    <strong>⚠ SENDER ACKNOWLEDGMENT PENDING</strong>
+
+    <p>
+        Please obtain acknowledgment directly from the sender
+        and follow the applicable verification instructions.
+    </p>
+
+    <span>
+        Response deadline: 24 hours from notice issuance.
+    </span>
+</div>
+<span class="muted small">·Verified</span>
     </div>
 
     <div class="table-wrap" style="margin-top:12px">
