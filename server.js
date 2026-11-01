@@ -5,7 +5,8 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const crypto = require("crypto");
-
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -24,7 +25,31 @@ if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !SESSION_SECRET) {
 
 app.set("trust proxy", 1);
 app.disable("x-powered-by");
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
 
+// Rate limit API requests
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+app.use("/api", apiLimiter);
+
+// Additional protection for login attempts
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    error: "Too many login attempts. Please try again later."
+  }
+});
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: false, limit: "10kb" }));
 
@@ -66,7 +91,7 @@ function requireAdmin(req, res, next) {
 }
 
 // Shared administrator login.
-app.post("/api/login", (req, res, next) => {
+app.post("/api/login", loginLimiter, (req, res, next) => {
   const username = req.body?.username;
   const password = req.body?.password;
 
