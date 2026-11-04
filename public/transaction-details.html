@@ -887,6 +887,42 @@ button:active,
 }
 
 
+/* Transaction lifecycle enhancements */
+
+.timeline-item {
+  position: relative;
+  transition: background 0.2s ease;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.timeline-item:hover {
+  background: rgba(85, 230, 208, 0.045);
+}
+
+.timeline-item strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.timeline-item p {
+  margin: 5px 0 0;
+}
+
+.timeline-dot {
+  flex-shrink: 0;
+}
+
+.transaction-flow-note {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
   </style>
 </head>
 
@@ -1127,6 +1163,132 @@ button:active,
   </section>
   </div>
 </details>
+
+<section class="section card">
+  <p class="eyebrow">TRON / TRC20 TRANSACTION FLOW</p>
+  <h2>USDT Transaction Lifecycle</h2>
+  <p class="muted small">
+    Technical overview of a standard TRC20 transfer.
+  </p>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">1</span>
+    <div>
+      <strong>Wallet Initiation</strong>
+      <p class="muted small">Sender enters receiver address and transfer amount.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">2</span>
+    <div>
+      <strong>Cryptographic Signing</strong>
+      <p class="muted small">Wallet signs the transaction using the sender's private key.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">3</span>
+    <div>
+      <strong>Network Broadcast</strong>
+      <p class="muted small">Signed transaction is broadcast to TRON nodes.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">4</span>
+    <div>
+      <strong>Node Validation</strong>
+      <p class="muted small">Network nodes validate transaction data and signatures.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">5</span>
+    <div>
+      <strong>Block Inclusion</strong>
+      <p class="muted small">Transaction is included in a TRON block.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">6</span>
+    <div>
+      <strong>TRC20 Contract Execution</strong>
+      <p class="muted small">USDT smart contract processes the transfer.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">7</span>
+    <div>
+      <strong>Receipt Verification</strong>
+      <p class="muted small">Verify execution result, token Transfer event, recipient and amount.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section card">
+  <p class="eyebrow">NETWORK ENGINEERING</p>
+  <h2>Packet Transmission Procedure</h2>
+  <p class="muted small">
+    Network communication flow associated with transaction submission.
+  </p>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">1</span>
+    <div>
+      <strong>Application Request</strong>
+      <p class="muted small">Wallet prepares the transaction request.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">2</span>
+    <div>
+      <strong>Signed Transaction Payload</strong>
+      <p class="muted small">Signed transaction data is prepared for submission.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">3</span>
+    <div>
+      <strong>TCP/IP Transport</strong>
+      <p class="muted small">Data travels through the network transport layer.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">4</span>
+    <div>
+      <strong>TRON Node Reception</strong>
+      <p class="muted small">Node receives the transaction request.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">5</span>
+    <div>
+      <strong>Transaction Processing</strong>
+      <p class="muted small">Node validates and processes the transaction.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-dot">6</span>
+    <div>
+      <strong>Receipt Retrieval</strong>
+      <p class="muted small">Application retrieves the transaction result.</p>
+    </div>
+  </div>
+
+  <p class="muted small">
+    A successful network packet delivery does not establish
+    successful USDT transfer execution.
+  </p>
+</section>
+
   <div class="topline">
     <h2>Transaction details</h2>
 </div>
