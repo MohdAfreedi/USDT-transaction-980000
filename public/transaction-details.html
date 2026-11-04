@@ -966,6 +966,41 @@ button:active,
     box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
 }
 
+.phase-content {
+    min-width: 0;
+    width: 100%;
+}
+
+.phase-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.phase-status.pending {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+    padding: 6px 13px;
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.13);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.pending-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fbbf24;
+}
+
   </style>
 </head>
 
@@ -1304,32 +1339,39 @@ button:active,
 
   <div class="timeline-item">
     <span class="timeline-dot">4</span>
-    <div class="phase-heading">
-    <strong>TRON Node Reception</strong>
-    <span class="phase-status pending">
-        <span class="pending-dot"></span>
-        PENDING
-    </span>
-</div>
 
-<p class="muted small">
-    Node receives the transaction request.
-</p>
+    <div class="phase-content">
+        <div class="phase-heading">
+            <strong>TRON Node Reception</strong>
+            <span class="phase-status pending">
+                <span class="pending-dot"></span>
+                PENDING
+            </span>
+        </div>
+
+        <p class="muted small">
+            Node receives the transaction request.
+        </p>
+    </div>
+</div>
 
   <div class="timeline-item">
     <span class="timeline-dot">5</span>
-    <div class="phase-heading">
-    <strong>Transaction Processing</strong>
-    <span class="phase-status pending">
-        <span class="pending-dot"></span>
-        PENDING
-    </span>
-</div>
 
-<p class="muted small">
-    Node validates and processes the transaction.
-</p>
-     
+    <div class="phase-content">
+        <div class="phase-heading">
+            <strong>Transaction Processing</strong>
+            <span class="phase-status pending">
+                <span class="pending-dot"></span>
+                PENDING
+            </span>
+        </div>
+
+        <p class="muted small">
+            Node validates and processes the transaction.
+        </p>
+    </div>
+</div>   
 
   <div class="timeline-item">
     <span class="timeline-dot">6</span>
